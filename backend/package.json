@@ -1,7 +1,6 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "sequelize": "sequelize",
@@ -34,5 +33,6 @@
     "pg": "^8.8.0",
     "sequelize": "^6.28.0",
     "sequelize-cli": "^6.5.2"
-  }
+  },
+  "description": ""
 }
