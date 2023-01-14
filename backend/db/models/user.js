@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     toSafeObject() {
       const { id, username, email } = this;
-      console.log(id, username, email)
       return { id, username, email };
     }
 
@@ -68,6 +67,14 @@ module.exports = (sequelize, DataTypes) => {
           len: [3, 256],
           isEmail: true
         }
+      },
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull:false
       },
       hashedPassword: {
         type: DataTypes.STRING.BINARY,

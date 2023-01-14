@@ -13,16 +13,22 @@ module.exports = {
       {
         email: 'caitlynstandre@gmail.com',
         username: 'CaitlynStAndre',
+        firstName: 'Caitlyn',
+        lastName: 'St.Andre',
         hashedPassword: bcrypt.hashSync('coolBeans')
       },
       {
         email: 'binxthesphynx@instagram.com',
         username: '_binx.the.sphynx_',
+        firstName: 'Binx',
+        lastName: 'St.Andre',
         hashedPassword: bcrypt.hashSync('catnip')
       },
       {
         email: 'salem@noinsta.com',
         username: 'salem_no_insta',
+        firstName: 'Salem',
+        lastName: 'St.Andre',
         hashedPassword: bcrypt.hashSync('MiceHunter')
       }
     ], {});
