@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    options.tbaleName = 'ReviewImages'
+    options.tableName = 'ReviewImages'
     await queryInterface.bulkInsert(options, [
       {
       url: 'https://res.cloudinary.com/djclmc80y/image/upload/v1674107342/Edgewood_zat9co.jpg',
