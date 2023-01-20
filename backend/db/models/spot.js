@@ -12,11 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Spot.hasMany(
         models.Booking,
-        { foreignKey: 'spotId', onDelete: null, hooks: true }
+        { foreignKey: 'spotId', onDelete: 'CASCADE', hooks: true }
       );
       Spot.hasMany(
-        models.Reviews,
-        { foreignKey: 'reviewId', onDelete: 'CASCADE', hooks: true }
+        models.Review,
+        { foreignKey: 'spotId', onDelete: 'CASCADE', hooks: true }
       );
       Spot.belongsTo(
         models.User,
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       );
       Spot.hasMany(
         models.SpotImage,
-        { foreignKey: 'sporId', onDelete: 'CASCADE', hooks: true }
+        { foreignKey: 'spotId', onDelete: 'CASCADE', hooks: true }
       )
     }
   }
@@ -34,19 +34,19 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     address: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: false
     },
     city: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(100),
       allowNull: false
     },
     state: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(100),
       allowNull: false
     },
     country: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(100),
       allowNull: false
     },
     lat: {
@@ -58,18 +58,18 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     name: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(100),
       allowNull: false
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(255),
       allowNull: false
     },
     price: {
       type: DataTypes.FLOAT,
       allowNull: false
     },
-    avgRating: DataTypes.FLOAT
+    avgRating: DataTypes.FLOAT,
   }, {
     sequelize,
     modelName: 'Spot',

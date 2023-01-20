@@ -50,14 +50,18 @@ module.exports = (sequelize, DataTypes) => {
       );
       User.hasMany(
         models.Review,
-        { foreignKey: 'reviewId', onDelete: 'CASCADE', hooks: true }
-      )
+        { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true }
+      );
+      User.hasMany(
+        models.Spot,
+        { foreignKey: 'ownerId', onDelete: 'CASCADE', hooks: true }
+      );
     }
   }
   User.init(
     {
       username: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(30),
         allowNull: false,
         validate: {
           len: [4, 30],
@@ -69,7 +73,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
       email: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(255),
         allowNull: false,
         validate: {
           len: [3, 256],
@@ -77,7 +81,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
       firstName: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(100),
         allowNull: false
       },
       lastName: {
