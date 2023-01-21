@@ -21,7 +21,6 @@ module.exports = {
       name: 'Edgewood Mansion',
       description: 'Amenities include a gym, sauna, wine cellar, private balcony for each bedroom, a fire pit, and more.',
       price: 500.00,
-      avgRating: 4.5,
     },
     {
       ownerId: 2,
@@ -34,7 +33,6 @@ module.exports = {
       name: 'The High-Falutin\' Hideaway',
       description: 'Family Cabin with Breathtaking Views, Hot tub',
       price: 900.00,
-      avgRating: 5,
     },
     {
       ownerId: 2,
@@ -47,7 +45,6 @@ module.exports = {
       name: 'Mountain View Lodge',
       description: 'Each of the nine bedrooms has its own full bathroom, TV, and fireplace.',
       price: 1500.00,
-      avgRating: 5,
     },
     {
       ownerId: 1,
@@ -60,7 +57,6 @@ module.exports = {
       name: 'Navigators Nest',
       description: 'Mansion right on the water.',
       price: 1000.00,
-      avgRating: 5,
     }
   ], {});
   },

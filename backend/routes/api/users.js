@@ -29,7 +29,7 @@ const validateSignup = [
   .exists()
   .withMessage('Please provide a last name.'),
   handleValidationErrors
-]
+];
 
 
 
@@ -37,8 +37,8 @@ router.post(
     '/',
     validateSignup,
     async (req, res) => {
-      const { email, password, username, firstName, lastName } = req.body;
-      const user = await User.signup({ email, username, firstName, lastName, password });
+      const { firstName, lastName, email, password, username } = req.body;
+      const user = await User.signup({ firstName, lastName, email, username, password });
 
       await setTokenCookie(res, user);
 

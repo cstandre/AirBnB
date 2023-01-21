@@ -19,6 +19,7 @@ module.exports = {
         allowNull: false,
         references: {
           model: 'Users',
+          as: 'Owner',
           key: 'id'
         },
         onDelete: 'cascade'
@@ -58,9 +59,6 @@ module.exports = {
       price: {
         type: Sequelize.FLOAT,
         allowNull: false
-      },
-      avgRating: {
-        type: Sequelize.FLOAT
       },
       createdAt: {
         allowNull: false,
