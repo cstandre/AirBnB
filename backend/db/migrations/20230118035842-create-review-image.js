@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-  ip: async (queryInterface, Sequelize) => {
+  up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('ReviewImages', {
       id: {
         allowNull: false,

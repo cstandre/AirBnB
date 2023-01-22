@@ -27,7 +27,7 @@ module.exports = {
     },
     {
       url: 'https://res.cloudinary.com/djclmc80y/image/upload/v1674183957/spot_3_img_uk5stx.jpg',
-      preview: false,
+      preview: true,
       spotId: 4
     }
   ], {});
