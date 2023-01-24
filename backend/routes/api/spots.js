@@ -37,7 +37,7 @@ const validateSpot = [
     handleValidationErrors
   ];
 
-// Get All Spots     <-- Completed *would like to add something if rating or preview spot is null and preview = false
+// Get All Spots     <-- Completed *would like to add something if rating or preview spot is null
 router.get('/', async (req, res) => {
     const spotsList = await Spot.findAll({
         attributes: {
@@ -59,7 +59,7 @@ router.get('/', async (req, res) => {
     res.json(spotsList);
 });
 
-// Get All Spots Owned/Created by the Current User. <-- completed. Would like to add something if rating or preview img is null and preview = false
+// Get All Spots Owned/Created by the Current User. <-- completed. Would like to add something if rating or preview img is null
 router.get('/current', requireAuth, async (req, res) => {
     const currentUserSpots = await Spot.findAll({
         where: { ownerId: req.user.id },

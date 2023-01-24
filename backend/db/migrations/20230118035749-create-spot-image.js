@@ -19,7 +19,8 @@ module.exports = {
         allowNull: false
       },
       preview: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       spotId: {
         type: Sequelize.INTEGER,

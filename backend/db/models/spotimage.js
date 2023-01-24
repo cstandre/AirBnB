@@ -21,7 +21,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(500),
       allowNull: false
     },
-    preview: DataTypes.BOOLEAN,
+    preview: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     spotId: {
       type: DataTypes.INTEGER,
       allowNull: false
