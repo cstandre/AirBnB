@@ -20,7 +20,8 @@ module.exports = {
       },
       preview: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        allowNull: false
       },
       spotId: {
         type: Sequelize.INTEGER,

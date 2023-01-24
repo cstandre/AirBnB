@@ -39,7 +39,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     stars: {
       type: DataTypes.INTEGER,
-      defaultValue: 0
+      defaultValue: 0,
+      allowNull: false
     }
   }, {
     sequelize,

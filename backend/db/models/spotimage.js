@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     preview: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false
+      defaultValue: false,
+      allowNull: false
     },
     spotId: {
       type: DataTypes.INTEGER,

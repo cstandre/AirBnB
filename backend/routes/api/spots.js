@@ -1,5 +1,5 @@
 const express = require('express');
-const { Spot, User, Review, SpotImage, sequelize } = require('./../../db/models')
+const { Spot, User, SpotImage, sequelize } = require('./../../db/models')
 const { requireAuth } = require('./../../utils/auth')
 const { check } = require('express-validator')
 const { handleValidationErrors } = require('./../../utils/validation')
@@ -19,10 +19,12 @@ const validateSpot = [
     .exists()
     .withMessage('Country is required'),
     check('lat')
-    .exists() // decimal??
+    .exists()
+    .isDecimal()
     .withMessage('Latitude is not valid'),
     check('lng')
-    .exists() // decimal??
+    .exists()
+    .isDecimal()
     .withMessage('Longitude is not valid'),
     check('name')
     .exists()
@@ -56,6 +58,19 @@ router.get('/', async (req, res) => {
         }
     });
 
+    // might not be needed
+    for await(let spot of spotsList) {
+        if (!spot.dataValues.previewImage) {
+            spot.dataValues.previewImage = 'No Preview Image'
+        }
+    }
+
+    for await(let spot of spotsList) {
+        if (!spot.dataValues.avgRating) {
+            spot.dataValues.avgRating = "Be the first to review!"
+        }
+    }
+
     res.json(spotsList);
 });
 
@@ -78,6 +93,19 @@ router.get('/current', requireAuth, async (req, res) => {
             ]
         },
     });
+
+        // might not be needed
+        for await(let spot of currentUserSpots) {
+            if (!spot.dataValues.previewImage) {
+                spot.dataValues.previewImage = 'No Preview Image'
+            }
+        }
+
+        for await(let spot of currentUserSpots) {
+            if (!spot.dataValues.avgRating) {
+                spot.dataValues.avgRating = "Be the first to review!"
+            }
+        }
 
     res.json(currentUserSpots)
 });
@@ -111,6 +139,7 @@ router.get('/:spotId', async (req, res) => {
         ]
     });
 
+
     if (spotDetails) {
         res.json(spotDetails)
     } else {
@@ -122,6 +151,7 @@ router.get('/:spotId', async (req, res) => {
 });
 
 // When I don't put anything into the body, then it sends the expected output for the validation errors. When I input all required data points expect one, I get "title: 'Bad request.'", "errors": ["Invalid Value"]
+    // that's the expected output
 
 // Create a Spot  <-- completed
 router.post('/', requireAuth, validateSpot, async (req, res) => {
