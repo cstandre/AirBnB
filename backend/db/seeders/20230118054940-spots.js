@@ -10,7 +10,7 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     options.tableName = 'Spots';
     await queryInterface.bulkInsert(options , [
-      {
+      { // Spot.id 1
       ownerId: 1,
       address: '848 Jeffries Rd.',
       city: 'Big Bear Lake',
@@ -22,7 +22,7 @@ module.exports = {
       description: 'Amenities include a gym, sauna, wine cellar, private balcony for each bedroom, a fire pit, and more.',
       price: 500.00,
     },
-    {
+    { // Spot.id 2
       ownerId: 2,
       address: '123 Elm Street',
       city: 'Broken Bow',
@@ -34,7 +34,7 @@ module.exports = {
       description: 'Family Cabin with Breathtaking Views, Hot tub',
       price: 900.00,
     },
-    {
+    { // Spot.id 3
       ownerId: 2,
       address: '1101 Parkview Vista Way',
       city: 'Pigeon Forge',
@@ -46,7 +46,7 @@ module.exports = {
       description: 'Each of the nine bedrooms has its own full bathroom, TV, and fireplace.',
       price: 1500.00,
     },
-    {
+    { // Spot.id 4
       ownerId: 1,
       address: '1040 Highway 98 E',
       city: 'Destin',
