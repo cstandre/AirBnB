@@ -30,7 +30,7 @@ module.exports = {
       country: 'United States of America',
       lat: 34.14606,
       lng: -94.70388,
-      name: 'The High-Falutin\' Hideaway',
+      name: 'The High-Falutin Hideaway',
       description: 'Family Cabin with Breathtaking Views, Hot tub',
       price: 900.00,
     },

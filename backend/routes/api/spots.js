@@ -1,5 +1,5 @@
 const express = require('express');
-const { Spot, User, SpotImage, sequelize } = require('./../../db/models')
+const { Spot, User, SpotImage, Review, ReviewImage, sequelize } = require('./../../db/models')
 const { requireAuth } = require('./../../utils/auth')
 const { check } = require('express-validator')
 const { handleValidationErrors } = require('./../../utils/validation')
@@ -38,6 +38,17 @@ const validateSpot = [
     .withMessage('Price per day is required'),
     handleValidationErrors
   ];
+
+const validateReview = [
+    check('review')
+    .exists()
+    .withMessage('Review text is required'),
+    check('stars')
+    .exists()
+    .isNumeric({min: 1, max: 5})
+    .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+];
 
 // Get All Spots     <-- Completed *would like to add something if rating or preview spot is null
 router.get('/', async (req, res) => {
@@ -205,6 +216,7 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
 
 });
 
+
 // Edit a spot <-- completed
 router.put('/:spotId', requireAuth, validateSpot, async (req, res) => {
     const user = req.user.id
@@ -253,5 +265,63 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
     }
 });
 
+//Get reviews by spotId <-- completed
+router.get('/:spotId/reviews', async(req, res) => {
+    const spotReview = await Review.findAll({
+        where: { spotId: req.params.spotId },
+        include: [
+            { model: User, attributes: ['id', 'firstName', 'lastName'] },
+            { model: ReviewImage, attributes: ['id', 'url'] },
+        ]
+    });
+
+    console.log(spotReview)
+
+    if (spotReview.length) {
+        res.json(spotReview)
+    } else {
+        res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+});
+
+// Create a Review for a Spot based on the spot's id  <-- Completed
+router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) => {
+    const { review, stars } = req.body;
+    const user = req.user.id
+    const spotId = req.params.spotId
+
+    const getSpot = await Spot.findByPk(spotId);
+
+    if (!getSpot) {
+        res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+    const allReviews = await Review.findOne({
+        where: {userId: user, spotId: spotId }
+    });
+
+    if(allReviews) {
+        res.status(403).json({
+            "message": "User already has a review for this spot",
+            "statusCode": 403
+        })
+    } else {
+        const makeReview = await Review.create(
+            {
+                userId: user,
+                spotId: spotId,
+                review: review,
+                stars: stars
+            }
+        )
+        res.status(201).json(makeReview)
+    }
+})
 
 module.exports = router;

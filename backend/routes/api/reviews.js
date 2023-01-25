@@ -1,8 +1,20 @@
 const express = require('express');
 const { Review, User, ReviewImage, Spot, sequelize } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
+const { check } = require('express-validator');
+const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
+const validateReview = [
+    check('review')
+    .exists()
+    .withMessage('Review text is required'),
+    check('stars')
+    .exists()
+    .isNumeric({min: 1, max: 5})
+    .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+];
 
 // Get All Reviews for Current User <-- Completed
 router.get('/current', requireAuth, async(req, res) => {
@@ -17,7 +29,7 @@ router.get('/current', requireAuth, async(req, res) => {
             },
             {
                 model: Spot,
-                attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'price', [sequelize.literal(
+                attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price', [sequelize.literal(
                     `(SELECT url
                     FROM SpotImages
                     WHERE spotId = Spot.id AND preview = true)`
@@ -34,43 +46,73 @@ router.get('/current', requireAuth, async(req, res) => {
 });
 
 
-//Almost done - can't figure out why the else isn't working
+// Add image based on the Review's id <-- Completed
+router.post('/:reviewId/images', requireAuth, async(req, res) => {
+    const user = req.user.id;
+    const { url } = req.body;
+    const review = await Review.findByPk(req.params.reviewId);
 
-// Get All Reviews by a Spot's id
-// router.get('/spots/:spotId', async(req, res) => {
-//     const spotReview = await Review.findAll({
-//         where: { spotId: req.params.spotId },
-//         include: [
-//             { model: User, attributes: ['id', 'firstName', 'lastName'] },
-//             { model: ReviewImage, attributes: ['id', 'url'] },
-//         ]
-//     });
+    if (review && user === review.userId) {
+        console.log("here")
+        const reviewId = review.id
 
-//     if (spotReview) {
-//         res.json(spotReview)
-//     } else {
-//         res.status(404).json({
-//             "message": "Spot couldn't be found",
-//             "statusCode": 404
-//         })
-//     }
-// });
+        const newImage = await ReviewImage.create({
+            url: url,
+            reviewId: reviewId
+        })
+        const newImgId = newImage.id;
+
+        const reviewImg = await ReviewImage.findByPk(newImgId, {
+            attributes: ['id', 'url']
+        })
+
+        res.json(reviewImg);
+    }else {
+        res.status(404).json({
+            "message": "Review couldn't be found",
+            "statusCode": 404
+        })
+    }
+});
+
+// Edit a review  <-- Completed
+router.put('/:reviewId', requireAuth, validateReview, async(req, res) => {
+    const user = req.user.id;
+    const { review, stars } = req.body;
+    const updatedReview = await Review.findByPk(req.params.reviewId);
+
+    if (updatedReview && user === updatedReview.userId) {
+        if (review) updatedReview.review = review;
+        if (stars) updatedReview.stars = stars;
+
+        updatedReview.save();
+        res.json(updatedReview)
+    } else {
+        res.status(404).json({
+            "message": "Review couldn't be found",
+            "statusCode": 404
+        })
+    }
+});
 
 
-// Create a Review for a Spot based on the spot's id
-// router.post('/spots/:spotId', requireAuth, async (req, res) => {
-//     const { review, stars } = req.body;
-//     const user = req.user.id
+// Delete a review  <-- Completed
+router.delete('/:reviewId', requireAuth, async(req, res) => {
+    const user = req.user.id;
+    const review = await Review.findByPk(req.params.reviewId);
 
-//     const newReview = await Review.create(
-//         {
-//             userId: user,
-//             spotId: req.params.spotId,
-//             review: review,
-//             stars: stars
-//         }
-//     )
-//     res.status(201).json(newReview)
-// })
+    if (review && user === review.userId) {
+        await review.destroy();
+        res.json({
+            "message": "Successfully deleted",
+            "statusCode": 200
+        });
+    } else {
+        res.json({
+            "message": "Review couldn't be found",
+            "statusCode": 404
+        });
+    };
+})
 
 module.exports = router;
