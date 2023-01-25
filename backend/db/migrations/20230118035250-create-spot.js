@@ -19,7 +19,6 @@ module.exports = {
         allowNull: false,
         references: {
           model: 'Users',
-          as: 'Owner',
           key: 'id'
         },
         onDelete: 'cascade'

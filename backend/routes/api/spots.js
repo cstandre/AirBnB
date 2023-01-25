@@ -1,8 +1,10 @@
 const express = require('express');
-const { Spot, User, SpotImage, Review, ReviewImage, sequelize } = require('./../../db/models')
+const { Spot, User, SpotImage, Review, ReviewImage, Booking, sequelize } = require('./../../db/models')
 const { requireAuth } = require('./../../utils/auth')
 const { check } = require('express-validator')
-const { handleValidationErrors } = require('./../../utils/validation')
+const { handleValidationErrors } = require('./../../utils/validation');
+
+
 const router = express.Router();
 
 const validateSpot = [
@@ -322,6 +324,28 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) =>
         )
         res.status(201).json(makeReview)
     }
-})
+});
+
+// Get all bookings for a spot based on the spotId
+router.get('/:spotId/bookings', requireAuth, async(req, res) => {
+    const user = req.user.id;
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if (user === spot.ownerId) {
+        const bookings = await booking.findAll({ where: {spotId: spot.id} })
+        console.log(bookings)
+        res.json()
+    }
+});
+
+// Create a booking from a spot based on the spotId
+router.post('/:spotId/bookings', requireAuth, async(req, res) => {
+    const user = req.user.id;
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if (user !== spot.id) {
+        // const booking;
+    }
+});
 
 module.exports = router;

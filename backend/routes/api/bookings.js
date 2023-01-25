@@ -1,6 +1,6 @@
 const express = require('express');
 const { requireAuth } = require('../../utils/auth')
-const { Booking, Spot } = require('../../db/models');
+const { Booking } = require('../../db/models');
 const router = express.Router();
 
 
@@ -8,12 +8,21 @@ const router = express.Router();
 router.get('/current', requireAuth, async(req, res) => {
     const user = req.user.id;
     const bookings = await Booking.findAll({
-            where: {userid: user}
+            where: {userId: user}
         })
 
     res.json(bookings);
 })
 
+// Edit a booking
+router.get('/:bookingId', requireAuth, async(req, res) => {
+    const user = req.user.id;
+});
+
+// Delete a booking
+router.delete('/:bookingId', requireAuth, async(req, res) => {
+    const user = req.user.id;
+});
 
 
 module.exports = router;
