@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  up: async(queryInterface, Sequelize) => {
     options.tableName = 'ReviewImages'
     await queryInterface.bulkInsert(options, [
       {
@@ -23,13 +23,13 @@ module.exports = {
     },
     {
       url: 'https://res.cloudinary.com/djclmc80y/image/upload/v1674184224/spot_4_review_qilppk.jpg',
-      reviewId: 3 // spotId 4
+      reviewId: 4 // spotId 3
     }
   ], {});
   },
 
-  async down (queryInterface, Sequelize) {
-    options.tbaleName = 'ReviewImages'
+  down: async(queryInterface, Sequelize) => {
+    options.tableName = 'ReviewImages'
     await queryInterface.bulkDelete(options, null, {});
   }
 };

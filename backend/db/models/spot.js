@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       );
       Spot.belongsTo(
         models.User,
-        { foreignKey: 'ownerId' }
+        { as: 'Owner', foreignKey: 'ownerId' }
       );
       Spot.hasMany(
         models.SpotImage,
@@ -69,7 +69,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT,
       allowNull: false
     },
-    avgRating: DataTypes.FLOAT,
   }, {
     sequelize,
     modelName: 'Spot',
