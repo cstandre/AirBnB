@@ -52,6 +52,18 @@ const validateReview = [
     handleValidationErrors
 ];
 
+const validateDate = [
+    check('startDate')
+    .exists()
+    .isBefore('endDate')
+    .withMessage('endDate cannot be on or before startDate'),
+    check('endDate')
+    .exists()
+    .isAfter('startDate')
+    .withMessage('endDate cannot be on or before startDate'),
+    handleValidationErrors
+];
+
 // Get All Spots     <-- Completed *would like to add something if rating or preview spot is null
 router.get('/', async (req, res) => {
     const spotsList = await Spot.findAll({
@@ -331,21 +343,42 @@ router.get('/:spotId/bookings', requireAuth, async(req, res) => {
     const user = req.user.id;
     const spot = await Spot.findByPk(req.params.spotId);
 
-    if (user === spot.ownerId) {
-        const bookings = await booking.findAll({ where: {spotId: spot.id} })
-        console.log(bookings)
-        res.json()
+    if (spot && user === spot.ownerId) {
+        const bookings = await Booking.findAll({ where: {spotId: spot.id} })
+        res.json(bookings)
+    } else {
+        res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
     }
 });
 
 // Create a booking from a spot based on the spotId
+// validateDate doesn't work
+// booking conflict not solved 
 router.post('/:spotId/bookings', requireAuth, async(req, res) => {
     const user = req.user.id;
     const spot = await Spot.findByPk(req.params.spotId);
+    const { startDate, endDate } = req.body;
 
-    if (user !== spot.id) {
-        // const booking;
+    if (!spot) {
+        res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
     }
+
+    if (spot && user !== spot.ownerId) {
+        const book = await Booking.create({
+            spotId: req.params.spotId,
+            userId: user,
+            startDate: startDate,
+            endDate: endDate
+        })
+        res.json(book)
+    }
+
 });
 
 module.exports = router;
