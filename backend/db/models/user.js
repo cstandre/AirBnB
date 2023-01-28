@@ -1,7 +1,9 @@
 'use strict';
 const { Model, Validator } = require('sequelize');
 const bcrypt = require('bcryptjs');
+const { sequelize } = require('.');
 
+module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     toSafeObject() {
       const { id, firstName, lastName, username, email } = this;
@@ -58,8 +60,7 @@ const bcrypt = require('bcryptjs');
       );
     }
   }
-  User.init(
-    {
+    User.init({
       firstName: {
         type: DataTypes.STRING(100),
         allowNull: false
@@ -88,14 +89,6 @@ const bcrypt = require('bcryptjs');
           }
         }
       },
-      email: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        validate: {
-          len: [3, 256],
-          isEmail: true
-        }
-      },
       hashedPassword: {
         type: DataTypes.STRING.BINARY,
         allowNull: false,
@@ -103,8 +96,7 @@ const bcrypt = require('bcryptjs');
           len: [60, 60]
         }
       }
-    },
-    {
+    },{
       sequelize,
       modelName: "User",
       defaultScope: {
@@ -120,7 +112,6 @@ const bcrypt = require('bcryptjs');
           attributes: {}
         }
       }
-    }
-  );
+    });
   return User;
 };
