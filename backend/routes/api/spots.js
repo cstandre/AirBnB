@@ -64,8 +64,31 @@ const validateDate = [
     handleValidationErrors
 ];
 
+const validateSearch = [
+    check('page')
+    .isInt({min: 0, max:10})
+    .withMessage('Page must be greater than or equal to 0'),
+    check('size')
+    .isInt({min: 0, max:20})
+    .withMessage('Size must be greater than or equal to 0'),
+    check('minLat')
+    .isDecimal()
+    .withMessage('Maximum latitude is invalid'),
+    check('maxLat')
+    .isDecimal()
+    .withMessage('Minimum latitude is invalid'),
+];
+
 // Get All Spots     <-- Completed *would like to add something if rating or preview spot is null
 router.get('/', async (req, res) => {
+    let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.body;
+
+    page = Number(page)
+    size = Number(size)
+
+    if (isNaN(page)) page = 0
+    if (isNaN(size)) size = 20
+
     const spotsList = await Spot.findAll({
         attributes: {
             include: [
@@ -80,7 +103,9 @@ router.get('/', async (req, res) => {
                     WHERE spotId = Spot.id AND preview = true)`
                 ), "previewImage"]
             ]
-        }
+        },
+        limit: size,
+        offset: (page - 1) * size
     });
 
     // might not be needed
@@ -96,7 +121,7 @@ router.get('/', async (req, res) => {
         }
     }
 
-    res.json(spotsList);
+    res.json(spotsList, page, size);
 });
 
 // Get All Spots Owned/Created by the Current User. <-- completed. Would like to add something if rating or preview img is null
