@@ -52,42 +52,35 @@ const validateReview = [
     handleValidationErrors
 ];
 
-const validateDate = [
-    check('startDate')
-    .exists()
-    .isBefore('endDate')
-    .withMessage('endDate cannot be on or before startDate'),
-    check('endDate')
-    .exists()
-    .isAfter('startDate')
-    .withMessage('endDate cannot be on or before startDate'),
-    handleValidationErrors
-];
-
-const validateSearch = [
-    check('page')
-    .isInt({min: 0, max:10})
-    .withMessage('Page must be greater than or equal to 0'),
-    check('size')
-    .isInt({min: 0, max:20})
-    .withMessage('Size must be greater than or equal to 0'),
-    check('minLat')
-    .isDecimal()
-    .withMessage('Maximum latitude is invalid'),
-    check('maxLat')
-    .isDecimal()
-    .withMessage('Minimum latitude is invalid'),
-];
-
 // Get All Spots     <-- Completed *would like to add something if rating or preview spot is null
 router.get('/', async (req, res) => {
-    let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.body;
+    let { page, size } = req.query;
 
-    page = Number(page)
-    size = Number(size)
+    page = Number(page);
+    size = Number(size);
 
-    if (isNaN(page)) page = 0
-    if (isNaN(size)) size = 20
+    let pagination = {}
+    if (!page || isNaN(page)) page = 1
+    if (!size || isNaN(size)) size = 20
+
+    if(page <=0 ){
+      return res.status(400).json({
+        message: "Validation Error",
+        statusCode: 400,
+        errors: {
+          "page": "Page must be greater than or equal to 1"}})
+    }
+    if(size <=0 ){
+      return res.status(400).json({
+        "message": "Validation Error",
+        "statusCode": 400,
+        "errors": {
+          "size": "Size must be greater than or equal to 1"}})
+    }
+    if (page >= 1 && size >= 1) {
+      pagination.limit = size
+      pagination.offset = size * (page - 1)
+    }
 
     const spotsList = await Spot.findAll({
         attributes: {
@@ -104,24 +97,26 @@ router.get('/', async (req, res) => {
                 ), "previewImage"]
             ]
         },
-        limit: size,
-        offset: (page - 1) * size
+        offset: pagination.offset,
+        limit: pagination.limit
     });
 
     // might not be needed
-    for await(let spot of spotsList) {
-        if (!spot.dataValues.previewImage) {
-            spot.dataValues.previewImage = 'No Preview Image'
-        }
-    }
+    // for await(let spot of spotsList) {
+    //     if (!spot.dataValues.previewImage) {
+    //         spot.dataValues.previewImage = 'No Preview Image'
+    //     }
+    // }
 
-    for await(let spot of spotsList) {
-        if (!spot.dataValues.avgRating) {
-            spot.dataValues.avgRating = "Be the first to review!"
-        }
-    }
+    // for await(let spot of spotsList) {
+    //     if (!spot.dataValues.avgRating) {
+    //         spot.dataValues.avgRating = "Be the first to review!"
+    //     }
+    // }
 
-    res.json(spotsList, page, size);
+    spotsList.page = page
+    spotsList.size = size
+    res.json({Spots: spotsList, page, size});
 });
 
 // Get All Spots Owned/Created by the Current User. <-- completed. Would like to add something if rating or preview img is null
@@ -157,7 +152,7 @@ router.get('/current', requireAuth, async (req, res) => {
             }
         }
 
-    res.json(currentUserSpots)
+    res.json({Spots: currentUserSpots})
 });
 
 // Get details of a Spot from an Id <-- completed *add something for if a review is null
@@ -317,7 +312,7 @@ router.get('/:spotId/reviews', async(req, res) => {
     console.log(spotReview)
 
     if (spotReview.length) {
-        res.json(spotReview)
+        res.json({Reviews: spotReview})
     } else {
         res.status(404).json({
             "message": "Spot couldn't be found",
@@ -377,16 +372,16 @@ router.get('/:spotId/bookings', requireAuth, async(req, res) => {
                 attributes: ['id', 'firstName', 'lastName']
             }
         })
-        res.json(bookings)
+        return res.json(bookings)
     } else if (spot && user !== spot.ownerId) {
-        const booking = await Booking.findALL({
+        const book = await Booking.findAll({
             where: {spotId: spot.id, userId: user},
             attributes: ['spotId', 'startDate', 'endDate']
         });
 
-        res.json(booking);
+        return res.json({Bookings: book});
     } else {
-        res.status(404).json({
+        return res.status(404).json({
             "message": "Spot couldn't be found",
             "statusCode": 404
         })
@@ -394,16 +389,47 @@ router.get('/:spotId/bookings', requireAuth, async(req, res) => {
 });
 
 // Create a booking from a spot based on the spotId
-// validateDate doesn't work
-// booking conflict not solved
 router.post('/:spotId/bookings', requireAuth, async(req, res) => {
     const user = req.user.id;
     const spot = await Spot.findByPk(req.params.spotId);
+    const booked = await Booking.findAll({ where: {spotId: req.params.spotId} })
     const { startDate, endDate } = req.body;
+    const start = new Date(startDate);
+    const end = new Date(endDate);
 
-    
-    console.log(date)
-    res.json()
+    if (start >= end) {
+        return res.status(400).json({
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": ["endDate cannot be on our before startDate"]
+        })
+    }
+
+    let flag = true;
+
+    booked.forEach(book => {
+        if (start.getTime() <= book.startDate.getTime() && end.getTime() >= book.endDate.getTime()) {
+            flag = false
+        } else if (book.startDate.getTime() <= start.getTime() && book.endDate.getTime() <= end.getTime()) {
+            flag = false
+        } else if (end.getTime() >= book.startDate.getTime() && end.getTime() <= book.endDate.getTime()) {
+            flag = false
+        } else if (start.getTime() >= book.startDate.getTime() && start.getTime() <= booked.endDate.getTime()) {
+            flag = false
+        }
+    })
+
+
+    if (!flag) {
+        return res.status(403).json({
+            "message": "Sorry, this spot is already booked for the specified dates",
+            "stautsCode": 403,
+            "errors": [
+                "Start date conflicts with an existing booking",
+                "End date conflicts with an existing booking"
+            ]
+        })
+    }
 
 
     if (spot && user !== spot.ownerId) {
@@ -413,9 +439,9 @@ router.post('/:spotId/bookings', requireAuth, async(req, res) => {
             startDate: startDate,
             endDate: endDate
         })
-        res.json(book)
+        return res.json(book)
     } else {
-        res.status(404).json({
+        return res.status(404).json({
             "message": "Spot couldn't be found",
             "statusCode": 404
         })

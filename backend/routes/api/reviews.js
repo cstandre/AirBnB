@@ -42,7 +42,7 @@ router.get('/current', requireAuth, async(req, res) => {
         ]
     });
 
-    res.json(userReview)
+    res.json({Reviews: userReview})
 });
 
 
