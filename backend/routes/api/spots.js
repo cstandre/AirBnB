@@ -338,14 +338,28 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) =>
     }
 });
 
-// Get all bookings for a spot based on the spotId
+// Get all bookings for a spot based on the spotId  <-- Completed
+// things are in the incorrect order though
 router.get('/:spotId/bookings', requireAuth, async(req, res) => {
     const user = req.user.id;
     const spot = await Spot.findByPk(req.params.spotId);
 
     if (spot && user === spot.ownerId) {
-        const bookings = await Booking.findAll({ where: {spotId: spot.id} })
+        const bookings = await Booking.findAll({
+            where: {spotId: spot.id},
+            include: {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            }
+        })
         res.json(bookings)
+    } else if (spot && user !== spot.ownerId) {
+        const booking = await Booking.findALL({
+            where: {spotId: spot.id, userId: user},
+            attributes: ['spotId', 'startDate', 'endDate']
+        });
+
+        res.json(booking);
     } else {
         res.status(404).json({
             "message": "Spot couldn't be found",
@@ -356,18 +370,16 @@ router.get('/:spotId/bookings', requireAuth, async(req, res) => {
 
 // Create a booking from a spot based on the spotId
 // validateDate doesn't work
-// booking conflict not solved 
+// booking conflict not solved
 router.post('/:spotId/bookings', requireAuth, async(req, res) => {
     const user = req.user.id;
     const spot = await Spot.findByPk(req.params.spotId);
     const { startDate, endDate } = req.body;
 
-    if (!spot) {
-        res.status(404).json({
-            "message": "Spot couldn't be found",
-            "statusCode": 404
-        })
-    }
+    
+    console.log(date)
+    res.json()
+
 
     if (spot && user !== spot.ownerId) {
         const book = await Booking.create({
@@ -377,6 +389,11 @@ router.post('/:spotId/bookings', requireAuth, async(req, res) => {
             endDate: endDate
         })
         res.json(book)
+    } else {
+        res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
     }
 
 });

@@ -38,7 +38,7 @@ router.put('/:bookingId', requireAuth, async(req, res) => {
     }
 });
 
-// Delete a booking  <-- completed 
+// Delete a booking
 router.delete('/:bookingId', requireAuth, async(req, res) => {
     const user = req.user.id;
     const booking = await Booking.findByPk(req.params.bookingId)
