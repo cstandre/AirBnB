@@ -16,8 +16,9 @@ router.get('/current', requireAuth, async(req, res) => {
         })
         for await (let booking of bookings) {
             const spot = booking.Spot.dataValues
+            console.log(spot.id)
             const image = await SpotImage.findOne({
-                where: {spotid: spot.id, preview: true }
+                where: {spotId: spot.id, preview: true }
             })
             if (image) {
                 booking.Spot.dataValues.previewImage = image.url
