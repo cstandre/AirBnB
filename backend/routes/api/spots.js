@@ -113,8 +113,6 @@ router.get('/', async (req, res) => {
         delete spot.dataValues.Reviews;
     })
 
-
-    res.json(spotList)
     spotList.page = page
     spotList.size = size
     res.json({Spots: spotList, page, size});
@@ -177,6 +175,13 @@ router.get('/:spotId', async (req, res) => {
 
     let sum = 0;
     let count = 0;
+
+    if (!spotDetails) {
+        res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
 
     if (spotDetails.Reviews.length) {
         spotDetails.Reviews.forEach(review => {
@@ -309,8 +314,6 @@ router.get('/:spotId/reviews', async(req, res) => {
             { model: ReviewImage, attributes: ['id', 'url'] },
         ]
     });
-
-    console.log(spotReview)
 
     if (spotReview.length) {
         res.json({Reviews: spotReview})
