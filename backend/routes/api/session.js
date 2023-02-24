@@ -55,7 +55,7 @@ router.post(
         return res.json({
             user: user.toSafeObject()
         });
-    } else return res.json();
+    } else return null;
   });
 
 
