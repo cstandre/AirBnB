@@ -6,9 +6,9 @@
   "dependencies": {
     "bcryptjs": "^2.4.3"
   },
-  "devDependencies": {},  "scripts": {
-    "render-postbuild": "npm run build --prefix frontend",
-    "install": "npm --prefix backend install backend && npm --prefix frontend install frontend",
+  "devDependencies": {},
+  "scripts": {
+    "install": "npm --prefix backend install backend",
     "dev:backend": "npm install --prefix backend start",
     "dev:frontend": "npm install --prefix frontend start",
     "sequelize": "npm run --prefix backend sequelize",
