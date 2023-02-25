@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import * as sessionAction from '../../store/session'
+import * as sessionAction from '../../../store/session'
 
 
 function SignupForm() {
