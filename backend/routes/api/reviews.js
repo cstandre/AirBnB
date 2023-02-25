@@ -62,7 +62,6 @@ router.post('/:reviewId/images', requireAuth, async(req, res) => {
     const review = await Review.findByPk(req.params.reviewId);
 
     if (review && user === review.userId) {
-        console.log("here")
         const reviewId = review.id
 
         const newImage = await ReviewImage.create({
