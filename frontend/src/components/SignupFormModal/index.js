@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import * as sessionAction from '../../../store/session'
+import { useDispatch } from 'react-redux';
+import { useModal } from '../../context/Modal';
+import * as sessionAction from '../../store/session';
+import './SignupForm.css';
 
 
-function SignupForm() {
+function SignupFormModal() {
     const dispatch = useDispatch();
-    const sessionUser = useSelector(state => state.session.user)
     const [username, setUsername] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -14,14 +14,15 @@ function SignupForm() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('')
     const [errors, setErrors] = useState([]);
+    const { closeModal } = useModal();
 
-    if (sessionUser) return <Redirect to='/' />
 
     const onSubmit = e => {
         e.preventDefualt();
         if (password === confirmPassword) {
             setErrors([]);
             return dispatch(sessionAction.signup({ username, firstName, lastName, email, password}))
+            .then(closeModal)
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors)
@@ -32,7 +33,8 @@ function SignupForm() {
     }
 
     return (
-        <div>
+        <>
+            <h1>Sign Up</h1>
             <form onSubmit={onSubmit}>
                 <ul>
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
@@ -93,8 +95,8 @@ function SignupForm() {
                 </label>
                 <button type='submit'>Sign Up!</button>
             </form>
-        </div>
+        </>
     );
 }
 
-export default SignupForm;
+export default SignupFormModal;
