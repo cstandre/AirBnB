@@ -18,10 +18,12 @@ function SignupFormModal() {
 
 
     const onSubmit = e => {
-        e.preventDefualt();
+        e.preventDefault();
+        console.log("onSubmit")
         if (password === confirmPassword) {
             setErrors([]);
             return dispatch(sessionAction.signup({ username, firstName, lastName, email, password}))
+            .then(closeModal)
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors)
