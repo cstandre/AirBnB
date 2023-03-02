@@ -26,7 +26,7 @@ router.post(
 
       if (!user) {
         res.status(401).json({
-          "message": "Invalid credentials",
+          "message": "The provided credentials were invalid",
           "statusCode": 401
         })
         // const err = new Error('Login failed');
