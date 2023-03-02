@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItems';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 
+
 import './ProfileButton.css'
 
 function ProfileButton({ user }) {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -35,6 +38,7 @@ function ProfileButton({ user }) {
 
   const logout = (e) => {
     e.preventDefault();
+    history.push('/');
     dispatch(sessionActions.logout());
     closeMenu();
   };
@@ -49,8 +53,8 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
+            <li>Hello, {user.firstName}</li>
             <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
             <li>{user.email}</li>
             <li>
               <button onClick={logout}>Log Out</button>

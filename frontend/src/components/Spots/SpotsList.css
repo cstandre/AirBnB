@@ -1,0 +1,12 @@
+ul {
+    list-style-type: none;
+}
+
+.preview {
+    height: 200px;
+    border-radius: 15px;
+}
+
+.spot {
+    text-decoration: none;
+}

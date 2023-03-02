@@ -18,10 +18,11 @@ function SignupFormModal() {
 
 
     const onSubmit = e => {
-        e.preventDefualt();
+        e.preventDefault();
         if (password === confirmPassword) {
             setErrors([]);
             return dispatch(sessionAction.signup({ username, firstName, lastName, email, password}))
+            .then(closeModal)
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors)
@@ -29,6 +30,13 @@ function SignupFormModal() {
         }
 
         return setErrors(['Confirm Password field must be the same as the Password field']);
+    }
+
+    let isDisabled = true;
+    if (username.length >= 4 && password.length >= 6 && confirmPassword.length >= 6 && password === confirmPassword) {
+        isDisabled = false;
+    } else {
+        isDisabled = true;
     }
 
     return (
@@ -92,7 +100,7 @@ function SignupFormModal() {
                         required
                     />
                 </label>
-                <button type='submit'>Sign Up!</button>
+                <button disabled={isDisabled} type='submit'>Sign Up!</button>
             </form>
         </>
     );
