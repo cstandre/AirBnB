@@ -14,7 +14,9 @@ function Navigation({ isLoaded }){
       <li>
         <NavLink exact to="/"><img className='logo' src={logo} alt="" /></NavLink>
         {sessionUser && (
-          <Link to="/spots/new">Create a New Spot</Link>
+          <div>
+            <Link to="/spots/new">Create a New Spot</Link>
+          </div>
         )}
       </li>
       {isLoaded && (

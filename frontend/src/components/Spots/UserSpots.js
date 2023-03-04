@@ -1,16 +1,16 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from 'react-router-dom';
-import { fetchSpots } from "../../store/spots";
+import { getCurrentSpots } from "../../store/spots";
 
 import './SpotsList.css';
 
-const SpotList = () => {
+const UserSpots = () => {
     const dispatch = useDispatch();
     const spots = useSelector(state=>state.spots);
 
     useEffect(() => {
-        dispatch(fetchSpots());
+        dispatch(getCurrentSpots());
     }, [dispatch]);
 
     return (
@@ -33,4 +33,4 @@ const SpotList = () => {
     )
 };
 
-export default SpotList;
+export default UserSpots;

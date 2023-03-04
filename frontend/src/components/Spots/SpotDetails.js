@@ -10,16 +10,23 @@ export default function SpotDetails() {
     const spot = useSelector(state=>state.spots[spotId]);
 
     useEffect(() => {
-        dispatch(spotDetails(spot.id));
-    }, [dispatch])
+        dispatch(spotDetails(spotId));
+    }, [dispatch, spotId])
 
     return (
         <>
-        <h1>{spot.name}</h1>
-        {spot.city}, {spot.state}, {spot.country}
-        <img src={spot.previewImage} alt="" />
-        Hosted By: {spot.ownerId}
-        {spot.description}
+        {spot && (
+                <div>
+                    <h1>{spot.name}</h1>
+                    <p>
+                    {spot.city}, {spot.state}, {spot.country}
+                    {spot.SpotImages && spot.SpotImages.map((image) => <img key={image.id} src={image.url} alt='' />)}
+                    Hosted By: {spot.Owner.firstName} {spot.Owner.lastName}
+                    {spot.description}
+                    </p>
+                </div>
+            )
+        }
         </>
     )
 }

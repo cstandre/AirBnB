@@ -1,27 +1,37 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { createSpot } from "../../store/spots";
+import { spotDetails } from "../../store/spots";
 
 
 export default function CreateSpotFrom() {
     const dispatch = useDispatch();
-    const [owner, setOwner] = useState('')
+    const sessionUser = useSelector(state=>state.session.user);
+    const history = useHistory();
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [country, setCountry] = useState('');
-    const [lat, setLat] = useState(null);
-    const [lng, setLng] = useState(null);
+    const [lat, setLat] = useState('');
+    const [lng, setLng] = useState('');
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [price, setPrice] = useState(null);
-    const [errors, setErrors] = useState([]);
+    const [price, setPrice] = useState('');
+    const [previewImage, setPreviewImage] = useState('');
+    // const [errors, setErrors] = useState([]);
 
-    const handleSubmit = e => {
-        e.preventDefault();
-        setErrors([])
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        const prevImage = {
+            preview: true,
+            url: previewImage
+        }
 
         const newSpot = {
+            owner: sessionUser,
             address,
             city,
             state,
@@ -30,93 +40,129 @@ export default function CreateSpotFrom() {
             lng,
             name,
             description,
-            price
+            price,
+            prevImage
         };
 
-        dispatch(createSpot(newSpot))
-
+        const spot = await dispatch(createSpot(newSpot))
+        if (spot) {
+            await dispatch(spotDetails(spot.id))
+            history.push(`/spots/${spot.id}`)
+        }
     }
 
     return (
         <>
         <h1>Create a New Spot!</h1>
+        <h2>Where is your place located?</h2>
+        <p>Guest will only get your address once they book a reservation.</p>
         <form onSubmit={handleSubmit}>
             <label>
-                Where is your place located?
+                Country
+                <input
+                type='text'
+                onChange={e => setCountry(e.target.value)}
+                value={country}
+                required
+                placeholder='Country'
+                />
+            </label>
+            <label>
+                Street Address
                 <input
                 type='text'
                 onChange={e => setAddress(e.target.value)}
                 value={address}
                 required
+                placeholder="Address"
                 />
             </label>
             <label>
-                City:
+                City
                 <input
                 type='text'
                 onChange={e => setCity(e.target.value)}
                 value={city}
+                required
+                placeholder="City"
                 />
             </label>
             <label>
-                State:
+                State
                 <input
                 type='text'
                 onChange={e => setState(e.target.value)}
                 value={state}
+                required
+                placeholder="State"
                 />
             </label>
             <label>
-                Country:
+                Latitude
                 <input
                 type='text'
-                onChange={e => setCountry(e.target.value)}
-                value={country}
-                />
-            </label>
-            <label>
-                Latitude:
-                <input
-                type='number'
                 onChange={e => setLat(e.target.value)}
                 value={lat}
+                required
+                placeholder="Latitude"
                 />
             </label>
             <label>
-            Longitude:
-                <input
-                type='number'
-                onChange={e => setLng(e.target.value)}
-                value={lng}
-                />
-            </label>
-            <label>
-                Create a title for your spot.
+                Longitude
                 <input
                 type='text'
-                onChange={e => setName(e.target.value)}
-                value={name}
+                onChange={e => setLng(e.target.value)}
+                value={lng}
+                required
+                placeholder="Longitude"
                 />
             </label>
+            <h2>Describe your place to guest</h2>
+            <p>Mention the best features of your space, any special amentities like fast Wi-Fi or parking, and what you love about the neighborhood.</p>
             <label>
-                Describe your place to guests.
                 <input
                 type='text'
                 onChange={e => setDescription(e.target.value)}
                 value={description}
+                placeholder='Please write at least 30 characters'
                 />
             </label>
             <label>
-                Set a base price for your spot.
+                <h2>Create a title for your spot.</h2>
+                <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
+                <input
+                type='text'
+                onChange={e => setName(e.target.value)}
+                value={name}
+                placeholder='Name of your spot'
+                />
+            </label>
+            <label>
+                <h2>Set a base price for your spot.</h2>
+                <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
+                $
                 <input
                 type='number'
                 onChange={e => setPrice(e.target.value)}
                 value={price}
+                placeholder='Price per night (USD)'
                 />
             </label>
             <label>
-                Liven up your spot with photos.
+                <h2>Liven up your spot with photos</h2>
+                <p>Submit a link to at least one photo to publish your spot.</p>
+                <input
+                type='url'
+                placeholder="Preview Image Url"
+                onChange={e => setPreviewImage(e.target.value)}
+                value={previewImage}
+                />
+                <input type='url' placeholder="Image Url"/>
+                <input type='url' placeholder="Image Url"/>
+                <input type='url' placeholder="Image Url"/>
+                <input type='url' placeholder="Image Url"/>
             </label>
+            <br/>
             <button>Create Spot</button>
         </form>
         </>
