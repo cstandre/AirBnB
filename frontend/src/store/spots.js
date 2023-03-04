@@ -6,7 +6,6 @@ const USER_SPOTS = 'spots/currentUser'
 const GET_ONE = 'spots/getOneSpot'
 const ADD_SPOT = 'spots/addSpots';
 const ADD_IMG = 'spots/addImage';
-const EDIT_SPOT = 'spots/editSpots';
 // const REMOVE_SPOT = 'spots/removeSpots';
 
 
@@ -25,6 +24,7 @@ export const currUserSpots = (spots) => {
 }
 
 export const getOneSpot = (spot) => {
+    // console.log(spot)
     return {
         type: GET_ONE,
         spot
@@ -45,13 +45,6 @@ export const addImage = (image) => {
     }
 }
 
-export const editSpot = (spot) => {
-    return {
-        type: EDIT_SPOT,
-        spot
-    }
-}
-
 
 export const fetchSpots = () => async (dispatch) => {
     const res = await csrfFetch('/api/spots');
@@ -67,7 +60,7 @@ export const spotDetails = (spotId) => async (dispatch) => {
     if (res.ok) {
         const spot = await res.json();
         dispatch(getOneSpot(spot));
-        return res
+        return spot;
     }
 }
 
@@ -80,7 +73,6 @@ export const createSpot = (details) => async (dispatch) => {
 
     if (spotFetch.ok) {
         const spot = await spotFetch.json();
-        dispatch(addSpot(spot));
 
         const imgFetch = await csrfFetch(`/api/spots/${spot.id}/images`, {
             method: 'POST',
@@ -89,6 +81,7 @@ export const createSpot = (details) => async (dispatch) => {
 
         const image = await imgFetch.json();
         dispatch(addImage(image));
+        dispatch(addSpot(spot));
         return spot;
     }
 }
@@ -101,6 +94,11 @@ export const getCurrentSpots = () => async (dispatch) => {
         dispatch(currUserSpots(userSpot));
         return userSpot;
     }
+}
+
+export const editSpotForm = (id) => async (dispatch) => {
+    console.log(id)
+
 }
 
 const initalState = {};
@@ -117,11 +115,13 @@ export default function spotReducer(state = initalState, action) {
             action.spots.Spot.forEach((spot) => (newState[spot.id] = spot))
             return newState;
         }
-        case GET_ONE:
+        case GET_ONE:{
+            // console.log(action.spot.id)
             return {
                 ...state,
                 [action.spot.id]: action.spot
             }
+        }
         case ADD_SPOT: {
             // console.log(state, action.spot)
             const newState = { ...state };

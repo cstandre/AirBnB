@@ -4,7 +4,7 @@ import { spotDetails } from "../../store/spots";
 import { useEffect } from "react";
 
 
-export default function SpotDetails() {
+export default function SpotDetails () {
     const { spotId } = useParams();
     const dispatch = useDispatch();
     const spot = useSelector(state=>state.spots[spotId]);
