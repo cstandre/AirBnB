@@ -1,27 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { editSpotForm } from "../../store/spots";
 import { spotDetails } from "../../store/spots";
 
 
+
 export default function EditSpotFrom() {
     const { spotId } = useParams();
-    const dispatch = useDispatch();
-    // const sessionUser = useSelector(state=>state.session.user);
     const history = useHistory();
-    const spot = useSelector(state=>state.spot[spotId])
-    console.log(spot)
-    const [address, setAddress] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [country, setCountry] = useState('');
-    const [lat, setLat] = useState('');
-    const [lng, setLng] = useState('');
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [price, setPrice] = useState('');
-    const [previewImage, setPreviewImage] = useState('');
+    const dispatch = useDispatch();
+    const spot = useSelector(state=>state.spots[spotId]);
+    console.log(spotId, spot)
+
+    useEffect(() => {
+        dispatch(spotDetails(spotId));
+    }, [dispatch, spotId])
+
+
+
+    const [address, setAddress] = useState(spot.address);
+    const [city, setCity] = useState(spot.city);
+    const [state, setState] = useState(spot.state);
+    const [country, setCountry] = useState(spot.country);
+    const [lat, setLat] = useState(spot.lat);
+    const [lng, setLng] = useState(spot.lng);
+    const [name, setName] = useState(spot.name);
+    const [description, setDescription] = useState(spot.description);
+    const [price, setPrice] = useState(spot.price);
+    const [previewImage, setPreviewImage] = useState(spot.previewImage); //ask about this one
     // const [errors, setErrors] = useState([]);
 
 
@@ -46,11 +53,11 @@ export default function EditSpotFrom() {
             prevImage
         };
 
-        await dispatch(editSpotForm(editSpot))
-        // if (spot) {
-        //     await dispatch(spotDetails(spot.id))
-        //     history.push(`/spots/${spot.id}`)
-        // }
+        await dispatch(editSpotForm(editSpot, spot.id))
+        if (spot) {
+            await dispatch(spotDetails(spot.id))
+            history.push(`/spots/${spot.id}`)
+        }
     }
 
     return (

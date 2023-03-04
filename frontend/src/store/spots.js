@@ -45,6 +45,13 @@ export const addImage = (image) => {
     }
 }
 
+// export const removeSpot = (spotId) => {
+//     return {
+//         type: REMOVE_SPOT,
+//         spotId
+//     }
+// }
+
 
 export const fetchSpots = () => async (dispatch) => {
     const res = await csrfFetch('/api/spots');
@@ -56,10 +63,12 @@ export const fetchSpots = () => async (dispatch) => {
 
 export const spotDetails = (spotId) => async (dispatch) => {
     const res = await csrfFetch(`/api/spots/${spotId}`)
+    console.log("here")
 
     if (res.ok) {
         const spot = await res.json();
         dispatch(getOneSpot(spot));
+        console.log(spot)
         return spot;
     }
 }
@@ -96,9 +105,26 @@ export const getCurrentSpots = () => async (dispatch) => {
     }
 }
 
-export const editSpotForm = (id) => async (dispatch) => {
-    console.log(id)
+export const editSpotForm = (details, id) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(details)
+    })
 
+    if (res.ok) {
+        const updateSpot = await res.json();
+        dispatch(addSpot(updateSpot));
+        return updateSpot;
+    }
+}
+
+export const deleteSpot = (id) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${id}`, {
+        method: 'DELETE'
+    });
+    if (res.ok) {
+        dispatch(getCurrentSpots())
+    }
 }
 
 const initalState = {};
@@ -116,10 +142,10 @@ export default function spotReducer(state = initalState, action) {
             return newState;
         }
         case GET_ONE:{
-            // console.log(action.spot.id)
+            console.log(action.spot)
             return {
                 ...state,
-                [action.spot.id]: action.spot
+                currentSpot: action.spot
             }
         }
         case ADD_SPOT: {
@@ -135,6 +161,11 @@ export default function spotReducer(state = initalState, action) {
                     ...state[action.image.id],
                 }
             }
+        // case REMOVE_SPOT: {
+        //     const newState = { ...state };
+        //     delete newState.spots[action.spotId];
+        //     return newState;
+        // }
         default:
             return state;
     }

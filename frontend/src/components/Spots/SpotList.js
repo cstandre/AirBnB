@@ -18,7 +18,7 @@ const SpotList = () => {
             <ul>
                 {Object.values(spots).map(({id, city, state, previewImage, avgRating, price}) => (
                     <li key={id}>
-                        <NavLink to={`spots/${id}`} className='spot'>
+                        <NavLink to={`/spots/${id}`} className='spot'>
                             <img className="preview" src={previewImage} alt="" />
                             <p>
                             {city}, {state} <br/>

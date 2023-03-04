@@ -31,14 +31,11 @@ function App() {
           <Route path='/spots/new'>
             <CreateSpotFrom />
           </Route>
-          <Route path='/spots/:spotId'>
-            <SpotDetails />
-          </Route>
-          <Route path='/spots/:spotId'>
-            <SpotDetails />
-          </Route>
           <Route path='/spots/:spotId/edit'>
             <EditSpotFrom />
+          </Route>
+          <Route path='/spots/:spotId'>
+            <SpotDetails />
           </Route>
         </Switch>
       )}
