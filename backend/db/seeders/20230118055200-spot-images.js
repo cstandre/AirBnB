@@ -11,22 +11,22 @@ module.exports = {
     options.tableName = 'SpotImages';
     await queryInterface.bulkInsert(options, [
       {
-        url: 'https://res.cloudinary.com/djclmc80y/image/upload/v1674183486/spot_1_img_b0szpt.jpg',
+        url: 'https://res.cloudinary.com/djclmc80y/image/upload/v1677730584/Screen-Shot-2018-01-13-at-6.46.47-PM_ay0m7x.jpg',
         preview: true,
         spotId: 1
     },
     {
-      url: 'https://res.cloudinary.com/djclmc80y/image/upload/v1674107412/spot2_fs0ena.jpg',
+      url: 'https://res.cloudinary.com/djclmc80y/image/upload/v1678053625/HT_amityville_horror_house_01_as_160606_16x9_1600_bdvdmd.jpg',
       preview: true,
       spotId: 2
     },
     {
-      url: 'https://res.cloudinary.com/djclmc80y/image/upload/v1674184073/spot_4_unpuli.jpg',
-      preview: false,
+      url: 'https://res.cloudinary.com/djclmc80y/image/upload/v1678053697/nightmare_on_elm_street_sj40w3.jpg',
+      preview: true,
       spotId: 3
     },
     {
-      url: 'https://res.cloudinary.com/djclmc80y/image/upload/v1674183957/spot_3_img_uk5stx.jpg',
+      url: 'https://res.cloudinary.com/djclmc80y/image/upload/v1678053722/the_conjuring_rnpr3c.jpg',
       preview: true,
       spotId: 4
     }

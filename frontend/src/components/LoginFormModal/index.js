@@ -32,7 +32,7 @@ function LoginFormModal() {
 
   const createDemo = () => {
     setCredential('DemoUser');
-    setPassword('Password123');
+    setPassword('DemoUser123');
     return dispatch(sessionActions.login(credential, password)).then(closeModal)
   }
 

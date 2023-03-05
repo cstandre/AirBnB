@@ -39,10 +39,14 @@ const UserSpots = () => {
         dispatch(getCurrentSpots());
     }, [dispatch]);
 
+    let hasSpots = false;
+    if (Object.keys(spots).length > 0) {
+        hasSpots = true
+    }
 
     return (
         <>
-            {spots &&
+            {hasSpots ? (
                 <ul>
                     <h1>Manage your Spots</h1>
                     {Object.values(spots).map(({id, city, state, previewImage, avgRating, price}, i) => (
@@ -64,7 +68,10 @@ const UserSpots = () => {
                         </li>
                     ))}
                 </ul>
-            }
+            ): (
+                <h1>You don't have any spots to manage, click the link above to get started</h1>
+
+            )}
         </>
     )
 };

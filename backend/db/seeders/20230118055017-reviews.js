@@ -13,25 +13,25 @@ module.exports = {
       {
       userId: 3,
       spotId: 1,
-      review: 'Best place ever!',
+      review: 'Love the ambiance!',
       stars: 5,
     },
     {
       userId: 1,
-      spotId: 3,
-      review: 'Was an "okay" experience.',
+      spotId: 2,
+      review: 'Perfect stay for the whole family!',
       stars: 3,
     },
     {
       userId: 2,
-      spotId: 2,
-      review: 'Has a blast!',
+      spotId: 3,
+      review: 'Had trouble sleeping...',
       stars: 4,
     },
     {
       userId: 2,
-      spotId: 3,
-      review: 'View was nice.',
+      spotId: 4,
+      review: 'Super authentic farm feel',
       stars: 4,
     }
   ], {});
