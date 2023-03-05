@@ -28,8 +28,12 @@ export default function EditSpotFrom() {
     const [name, setName] = useState(spot.name);
     const [description, setDescription] = useState(spot.description);
     const [price, setPrice] = useState(spot.price);
-    const [previewImage, setPreviewImage] = useState(spot.previewImage); //ask about this one
-    // const [errors, setErrors] = useState([]);
+    const [previewImage, setPreviewImage] = useState(spot.previewImage);
+    const [image1, setImage1] = useState('');
+    const [image2, setImage2] = useState('');
+    const [image3, setImage3] = useState('');
+    const [image4, setImage4] = useState('');
+    const [errors, setErrors] = useState([]);
 
 
     const handleSubmit = async (e) => {
@@ -39,6 +43,28 @@ export default function EditSpotFrom() {
             preview: true,
             url: previewImage
         }
+
+        const addImage1 = {
+            preview: false,
+            url: image1
+        }
+
+        const addImage2 = {
+            preview: false,
+            url: image2
+        }
+
+        const addImage3 = {
+            preview: false,
+            url: image3
+        }
+
+        const addImage4 = {
+            preview: false,
+            url: image4
+        }
+
+        const handelImages = [prevImage, addImage1, addImage2, addImage3, addImage4]
 
         const editSpot = {
             address,
@@ -50,10 +76,16 @@ export default function EditSpotFrom() {
             name,
             description,
             price,
-            prevImage
+            handelImages
         };
 
         await dispatch(editSpotForm(editSpot, spot.id))
+        .catch(async (res) => {
+            if (res.status === 400) {
+                const errorMsg = "Spot description must be at least 30 charactors";
+                setErrors([errorMsg])
+            }
+        })
         if (spot) {
             await dispatch(spotDetails(spot.id))
             history.push(`/spots/${spot.id}`)
@@ -66,6 +98,9 @@ export default function EditSpotFrom() {
         <h2>Where is your place located?</h2>
         <p>Guest will only get your address once they book a reservation.</p>
         <form onSubmit={handleSubmit}>
+            <ul>
+                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+            </ul>
             <label>
                 Country
                 <input
@@ -166,10 +201,30 @@ export default function EditSpotFrom() {
                 onChange={e => setPreviewImage(e.target.value)}
                 value={previewImage}
                 />
-                <input type='url' placeholder="Image Url"/>
-                <input type='url' placeholder="Image Url"/>
-                <input type='url' placeholder="Image Url"/>
-                <input type='url' placeholder="Image Url"/>
+                <input
+                type='url'
+                placeholder="Image URL"
+                onChange={e => setImage1(e.target.value)}
+                value={image1}
+                />
+                <input
+                type='url'
+                placeholder="Image URL"
+                onChange={e => setImage2(e.target.value)}
+                value={image2}
+                />
+                <input
+                type='url'
+                placeholder="Image URL"
+                onChange={e => setImage3(e.target.value)}
+                value={image3}
+                />
+                <input
+                type='url'
+                placeholder="Image URL"
+                onChange={e => setImage4(e.target.value)}
+                value={image4}
+                />
             </label>
             <br/>
             <button>Edit Spot</button>

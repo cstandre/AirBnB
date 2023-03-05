@@ -23,6 +23,7 @@ export default function SpotDetails () {
                     {spot.SpotImages && spot.SpotImages.map((image) => <img key={image.id} src={image.url} alt='' />)}
                     Hosted By: {spot.Owner.firstName} {spot.Owner.lastName}
                     {spot.description}
+                    {spot.price}
                     </p>
                 </div>
             )

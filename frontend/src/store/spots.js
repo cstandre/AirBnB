@@ -74,7 +74,7 @@ export const spotDetails = (spotId) => async (dispatch) => {
 }
 
 export const createSpot = (details) => async (dispatch) => {
-    const { prevImage } = details;
+    const { handelImages } = details;
     const spotFetch = await csrfFetch('/api/spots', {
         method: 'POST',
         body: JSON.stringify(details)
@@ -83,15 +83,41 @@ export const createSpot = (details) => async (dispatch) => {
     if (spotFetch.ok) {
         const spot = await spotFetch.json();
 
-        const imgFetch = await csrfFetch(`/api/spots/${spot.id}/images`, {
-            method: 'POST',
-            body: JSON.stringify(prevImage)
-        });
+        for await (let images of handelImages) {
+            const imgFetch = await csrfFetch(`/api/spots/${spot.id}/images`, {
+                method: 'POST',
+                body: JSON.stringify(images)
+            });
+            const image = await imgFetch.json();
+            dispatch(addImage(image));
+        }
 
-        const image = await imgFetch.json();
-        dispatch(addImage(image));
         dispatch(addSpot(spot));
         return spot;
+    }
+}
+
+export const editSpotForm = (details, id) => async (dispatch) => {
+    const { handelImages } = details;
+    const spotFetch = await csrfFetch(`/api/spots/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(details)
+    })
+
+    if (spotFetch.ok) {
+        const updateSpot = await res.json();
+
+        for await (let images of handelImages) {
+            const imgFetch = await csrfFetch(`/api/spots/${spot.id}/images`, {
+                method: 'PUT',
+                body: JSON.stringify(images)
+            });
+            const image = await imgFetch.json();
+            dispatch(addImage(image));
+        }
+
+        dispatch(addSpot(updateSpot));
+        return updateSpot;
     }
 }
 
@@ -104,20 +130,6 @@ export const getCurrentSpots = () => async (dispatch) => {
         return userSpot;
     }
 }
-
-export const editSpotForm = (details, id) => async (dispatch) => {
-    const res = await csrfFetch(`/api/spots/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify(details)
-    })
-
-    if (res.ok) {
-        const updateSpot = await res.json();
-        dispatch(addSpot(updateSpot));
-        return updateSpot;
-    }
-}
-
 export const deleteSpot = (id) => async (dispatch) => {
     const res = await csrfFetch(`/api/spots/${id}`, {
         method: 'DELETE'
