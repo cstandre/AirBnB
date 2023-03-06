@@ -63,12 +63,10 @@ export const fetchSpots = () => async (dispatch) => {
 
 export const spotDetails = (spotId) => async (dispatch) => {
     const res = await csrfFetch(`/api/spots/${spotId}`)
-    console.log("here")
 
     if (res.ok) {
         const spot = await res.json();
         dispatch(getOneSpot(spot));
-        console.log(spot)
         return spot;
     }
 }
@@ -105,10 +103,10 @@ export const editSpotForm = (details, id) => async (dispatch) => {
     })
 
     if (spotFetch.ok) {
-        const updateSpot = await res.json();
+        const updateSpot = await spotFetch.json();
 
         for await (let images of handelImages) {
-            const imgFetch = await csrfFetch(`/api/spots/${spot.id}/images`, {
+            const imgFetch = await csrfFetch(`/api/spots/${id}/images`, {
                 method: 'PUT',
                 body: JSON.stringify(images)
             });
@@ -154,7 +152,7 @@ export default function spotReducer(state = initalState, action) {
             return newState;
         }
         case GET_ONE:{
-            console.log(action.spot)
+            // console.log(action.spot)
             return {
                 ...state,
                 currentSpot: action.spot

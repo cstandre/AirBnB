@@ -11,7 +11,7 @@ export default function EditSpotFrom() {
     const history = useHistory();
     const dispatch = useDispatch();
     const spot = useSelector(state=>state.spots[spotId]);
-    console.log(spotId, spot)
+    // console.log(spotId, spot)
 
     useEffect(() => {
         dispatch(spotDetails(spotId));
