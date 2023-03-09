@@ -2,7 +2,6 @@ import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
-import CreateSpotFrom from '../Spots/CreateSpot';
 import logo from '../../assets/logo.png'
 import './Navigation.css';
 

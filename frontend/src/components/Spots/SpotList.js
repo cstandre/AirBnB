@@ -23,7 +23,7 @@ const SpotList = () => {
                             <img className="preview" src={previewImage} alt="" />
                             <p>
                             {city}, {state} <br/>
-                            <i class="fa-solid fa-star"></i>{avgRating || 'New'} <br/>
+                            <i className="fa-solid fa-star"></i>{avgRating || 'New'} <br/>
                             ${price} /Night
                             </p>
                         </NavLink>

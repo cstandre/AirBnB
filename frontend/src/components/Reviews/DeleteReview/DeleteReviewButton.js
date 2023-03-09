@@ -4,19 +4,19 @@ import { deleteSpot } from "../../store/spots";
 import { useModal } from '../../context/Modal';
 
 
-export default function DeleteSpotButton({id}) {
+export default function DeleteReviewButton({id}) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
     const handleClick = () => {
-        return dispatch(deleteSpot(id)).then(closeModal)
+        return dispatch(deleteReviewFetch(id)).then(closeModal)
     }
 
     return (
         <div>
-            <p>Are you sure you want to delete your spot?</p>
-            <button onClick={handleClick}>Yes (Delete Spot)</button>
-            <button onClick={closeModal}>No (Keep Spot)</button>
+            <p>Are you sure you want to delete your review?</p>
+            <button onClick={handleClick}>Yes (Delete review)</button>
+            <button onClick={closeModal}>No (Keep review)</button>
         </div>
     )
 }

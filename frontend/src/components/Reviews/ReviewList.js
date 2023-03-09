@@ -14,16 +14,26 @@ const ReviewList = () => {
     }, [dispatch, spotId]);
 
 
+    const firstName = Object.values(reviews).map(review => review.User.firstName)
+
+    const date = Object.values(reviews).map((review) => new Date(review.createdAt));
+    const dateArr = date.toString().split(' ');
+    const month = dateArr[1];
+    const year = dateArr[3];
+
     return (
         <>
-            <h1>Reviews</h1>
-            <ul>
-                {Object.values(reviews).map(({id, review, stars}) => (
+            <div>
+                {Object.values(reviews).map(({id, review}) => (
                     <li key={id}>
-                        {review}<br/> {stars}
+                        {firstName}
+                        <br/>
+                        {month} {year}
+                        <br/>
+                        {review}
                     </li>
                 ))}
-            </ul>
+            </div>
         </>
     )
 }

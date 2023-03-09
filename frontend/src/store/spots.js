@@ -24,7 +24,7 @@ export const currUserSpots = (spots) => {
 }
 
 export const getOneSpot = (spot) => {
-    // console.log(spot)
+    console.log(spot)
     return {
         type: GET_ONE,
         spot

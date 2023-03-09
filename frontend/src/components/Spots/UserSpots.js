@@ -49,8 +49,8 @@ const UserSpots = () => {
             {hasSpots ? (
                 <ul>
                     <h1>Manage your Spots</h1>
-                    {Object.values(spots).map(({id, city, state, previewImage, avgRating, price}, i) => (
-                        <li key={i}>
+                    {Object.values(spots).map(({id, city, state, previewImage, avgRating, price}) => (
+                        <li key={id}>
                             <NavLink to={`/spots/${id}`} className='spot'>
                                 <img className="preview" src={previewImage} alt="" />
                                 <p>
