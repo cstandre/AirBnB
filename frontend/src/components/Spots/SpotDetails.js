@@ -16,6 +16,11 @@ export default function SpotDetails () {
     const spot = useSelector(state=>state.spots?.currentSpot);
     const sessionUser = useSelector(state => state.session.user);
 
+    let userId
+    if (sessionUser) {
+        userId = sessionUser.id
+    }
+
     useEffect(() => {
         dispatch(spotDetails(spotId));
     }, [dispatch, spotId])
@@ -37,27 +42,14 @@ export default function SpotDetails () {
                         </p>
                     </div>
                     <div>
-                    {spot?.Owner?.id === sessionUser?.id && spot?.numReviews <= 0 && (
+                        {spot?.Owner.id === sessionUser?.id && spot?.numReviews <= 0 && (
                             <div>
                                 <i className="fa-solid fa-star"></i> NEW
                             </div>
                         )}
                     </div>
                     <div>
-                    {spot?.Owner?.id !== sessionUser?.id && spot?.numReviews <= 0 && (
-                            <div>
-                                <i className="fa-solid fa-star"></i> NEW
-                                <p>Be the first to review!!</p>
-                                <OpenModalButton
-                                buttonText="Post Your Review"
-                                onButtonClick={closeModal}
-                                modalComponent={<CreateReviewModal userId={sessionUser?.id} spotId={spotId}/>}
-                                />
-                            </div>
-                        )}
-                    </div>
-                    <div>
-                    {spot?.Owner?.id !== sessionUser?.id && spot?.numReviews === 1 && (
+                        {spot.Owner.id !== sessionUser.id && spot.numReviews === 1 && (
                             <div>
                                 <i className="fa-solid fa-star"></i>
                                 {spot.avgRating} {spot.numReviews} reviews
@@ -76,17 +68,12 @@ export default function SpotDetails () {
                             <div>
                                 <i className="fa-solid fa-star"></i>
                                 {spot?.avgRating} {spot?.numReviews} reviews
-                                <OpenModalButton
-                                buttonText="Post Your Review"
-                                onButtonClick={closeModal}
-                                modalComponent={<CreateReviewModal userId={sessionUser?.id} spotId={spotId}/>}
-                                />
                                 <ReviewList />
                             </div>
                         )}
                     </div>
                     <div>
-                        {spot.numReviews === 1 && (
+                        {spot?.numReviews === 1 && (
                             <div>
                                 <i className="fa-solid fa-star"></i>
                                 {spot?.avgRating} {spot?.numReviews} review

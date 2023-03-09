@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 // import { useHistory, Link } from "react-router-dom";
-import { deleteSpot } from "../../store/spots";
 import { useModal } from '../../context/Modal';
+import { deleteReviewFetch } from "../../../store/reviews";
 
 
 export default function DeleteReviewButton({id}) {
