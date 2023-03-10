@@ -16,11 +16,6 @@ export default function SpotDetails () {
     const spot = useSelector(state=>state.spots?.currentSpot);
     const sessionUser = useSelector(state => state.session.user);
 
-    let userId
-    if (sessionUser) {
-        userId = sessionUser.id
-    }
-
     useEffect(() => {
         dispatch(spotDetails(spotId));
     }, [dispatch, spotId])
@@ -42,17 +37,21 @@ export default function SpotDetails () {
                         </p>
                     </div>
                     <div>
-                        {spot?.Owner.id === sessionUser?.id && spot?.numReviews <= 0 && (
-                            <div>
-                                <i className="fa-solid fa-star"></i> NEW
-                            </div>
-                        )}
-                    </div>
-                    <div>
-                        {spot.Owner.id !== sessionUser.id && spot.numReviews === 1 && (
+                        {(sessionUser !== undefined && spot.Owner.id !== sessionUser?.id && spot.numReviews > 1) ? (
                             <div>
                                 <i className="fa-solid fa-star"></i>
                                 {spot.avgRating} {spot.numReviews} reviews
+                                <OpenModalButton
+                                    buttonText="Post Your Review"
+                                    onButtonClick={closeModal}
+                                    modalComponent={<CreateReviewModal userId={sessionUser?.id} spotId={spotId}/>}
+                                />
+                                <ReviewList />
+                            </div>
+                        ): (sessionUser !== undefined && spot.Owner.id !== sessionUser.id && spot.numReviews === 1) ? (
+                            <div>
+                                <i className="fa-solid fa-star"></i>
+                                {spot.avgRating} {spot.numReviews} review
                                 <OpenModalButton
                                 buttonText="Post Your Review"
                                 onButtonClick={closeModal}
@@ -60,24 +59,47 @@ export default function SpotDetails () {
                                 />
                                 <ReviewList />
                             </div>
-                        )}
-                    </div>
-                    <div>
-                        {spot?.numReviews > 1 &&
-                        (
+                        ): (sessionUser !== undefined && spot.Owner.id !== sessionUser?.id && spot.numReviews <= 0) ? (
+                            <div>
+                                <i className="fa-solid fa-star"></i> NEW
+                                <h1>Be the first to post a review!</h1>
+                                <OpenModalButton
+                                    buttonText="Post Your Review"
+                                    onButtonClick={closeModal}
+                                    modalComponent={<CreateReviewModal userId={sessionUser?.id} spotId={spotId}/>}
+                                />
+                            </div>
+                        ) : (sessionUser !== undefined && spot.Owner.id === sessionUser?.id && spot.numReviews > 1) ? (
+                            <div>
+                            <i className="fa-solid fa-star"></i>
+                            {spot.avgRating} {spot.numReviews} reviews
+                            <ReviewList />
+                        </div>
+                        ) : (sessionUser !== undefined && spot.Owner.id === sessionUser?.id && spot.numReviews === 1) ? (
+                            <div>
+                            <i className="fa-solid fa-star"></i>
+                            {spot.avgRating} {spot.numReviews} review
+                            <ReviewList />
+                        </div>
+                        ) : (sessionUser !== undefined && spot.Owner.id === sessionUser?.id && spot.numReviews < 0) ? (
+                            <div>
+                            <i className="fa-solid fa-star"></i> NEW
+                        </div>
+                        ) : (!sessionUser && spot.numReviews > 1) ? (
                             <div>
                                 <i className="fa-solid fa-star"></i>
-                                {spot?.avgRating} {spot?.numReviews} reviews
+                                {spot.avgRating} {spot.numReviews} reviews
                                 <ReviewList />
                             </div>
-                        )}
-                    </div>
-                    <div>
-                        {spot?.numReviews === 1 && (
+                        ) : (!sessionUser && spot.numReviews === 1) ? (
                             <div>
                                 <i className="fa-solid fa-star"></i>
-                                {spot?.avgRating} {spot?.numReviews} review
+                                {spot.avgRating} {spot.numReviews} review
                                 <ReviewList />
+                            </div>
+                        ) : (
+                            <div>
+                                <i className="fa-solid fa-star"></i> NEW
                             </div>
                         )}
                     </div>
@@ -87,3 +109,6 @@ export default function SpotDetails () {
         </>
     )
 }
+
+
+// spot.Owner.id !== sessionUser?.id && spot.numReviews === 1
