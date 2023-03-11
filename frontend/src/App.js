@@ -4,10 +4,10 @@ import { Route, Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SpotList from "./components/Spots/SpotList";
-import SpotDetails from "./components/Spots/SpotDetails";
+import SpotDetails from "./components/Spots/SpotsDetails/index";
 import UserSpots from "./components/Spots/UserSpots";
 import CreateSpotFrom from "./components/Spots/CreateSpot";
-import EditSpotFrom from "./components/Spots/EditSpotForm";
+import EditSpotFrom from "./components/Spots/EditSpotForm/index";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ function App() {
           <Route path='/spots/:spotId/edit'>
             <EditSpotFrom />
           </Route>
-          <Route path='/spots/:spotId'>
+          <Route exact path='/spots/:spotId'>
             <SpotDetails />
           </Route>
         </Switch>

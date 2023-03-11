@@ -29,7 +29,6 @@ export const deleteReview = (review) => {
 export const getSpotReviews = (spotId) => async (dispatch) => {
     const res = await csrfFetch(`/api/spots/${spotId}/reviews`);
 
-
     if (res.ok) {
         const reviews = await res.json()
         dispatch(getReviews(reviews));
@@ -38,10 +37,8 @@ export const getSpotReviews = (spotId) => async (dispatch) => {
 }
 
 export const createReviewFetch = (review) => async (dispatch) => {
-    const { spotId } = review
-    console.log(spotId)
-    console.log(review)
-    const res = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+    const { spot } = review
+    const res = await csrfFetch(`/api/spots/${spot}/reviews`, {
         method: 'POST',
         body: JSON.stringify(review)
     });
@@ -54,6 +51,7 @@ export const createReviewFetch = (review) => async (dispatch) => {
 };
 
 export const deleteReviewFetch = (reviewId) => async (dispatch) => {
+    console.log(reviewId)
     const res = await csrfFetch(`/api/reviews/${reviewId}`, {
         method: 'DELETE'
     });

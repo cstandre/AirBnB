@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { editSpotForm } from "../../store/spots";
-import { spotDetails } from "../../store/spots";
+import { editSpotForm } from "../../../store/spots";
+import { spotDetails } from "../../../store/spots";
 
-
+import './EditSpotForm.css';
 
 export default function EditSpotFrom() {
     const { spotId } = useParams();
@@ -94,14 +94,15 @@ export default function EditSpotFrom() {
 
     return (
         <>
-        <h1>Need to make a change?</h1>
-        <h2>Where is your place located?</h2>
-        <p>Guest will only get your address once they book a reservation.</p>
-        <form onSubmit={handleSubmit}>
+        <div className="page-wrapper">
+            <h1 className="editSpot-header">Need to make a change?</h1>
+            <h2 className="editSpot-subHeader">Where is your place located?</h2>
+            <p className="description">Guest will only get your address once they book a reservation.</p>
+        </div>
+        <form className="spotForm" onSubmit={handleSubmit}>
             <ul>
                 {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
-            <label>
                 Country
                 <input
                 type='text'
@@ -110,8 +111,6 @@ export default function EditSpotFrom() {
                 required
                 placeholder='Country'
                 />
-            </label>
-            <label>
                 Street Address
                 <input
                 type='text'
@@ -120,8 +119,6 @@ export default function EditSpotFrom() {
                 required
                 placeholder="Address"
                 />
-            </label>
-            <label>
                 City
                 <input
                 type='text'
@@ -130,8 +127,6 @@ export default function EditSpotFrom() {
                 required
                 placeholder="City"
                 />
-            </label>
-            <label>
                 State
                 <input
                 type='text'
@@ -140,8 +135,6 @@ export default function EditSpotFrom() {
                 required
                 placeholder="State"
                 />
-            </label>
-            <label>
                 Latitude
                 <input
                 type='text'
@@ -150,8 +143,6 @@ export default function EditSpotFrom() {
                 required
                 placeholder="Latitude"
                 />
-            </label>
-            <label>
                 Longitude
                 <input
                 type='text'
@@ -160,18 +151,14 @@ export default function EditSpotFrom() {
                 required
                 placeholder="Longitude"
                 />
-            </label>
-            <h2>Describe your place to guest</h2>
-            <p>Mention the best features of your space, any special amentities like fast Wi-Fi or parking, and what you love about the neighborhood.</p>
-            <label>
+                <h2 className="newSpot-subHeader">Describe your place to guest</h2>
+                <p className="description">Mention the best features of your space, any special amentities like fast Wi-Fi or parking, and what you love about the neighborhood.</p>
                 <input
                 type='text'
                 onChange={e => setDescription(e.target.value)}
                 value={description}
                 placeholder='Please write at least 30 characters'
                 />
-            </label>
-            <label>
                 <h2>Create a title for your spot.</h2>
                 <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
                 <input
@@ -180,8 +167,6 @@ export default function EditSpotFrom() {
                 value={name}
                 placeholder='Name of your spot'
                 />
-            </label>
-            <label>
                 <h2>Set a base price for your spot.</h2>
                 <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
                 $
@@ -191,8 +176,6 @@ export default function EditSpotFrom() {
                 value={price}
                 placeholder='Price per night (USD)'
                 />
-            </label>
-            <label>
                 <h2>Liven up your spot with photos</h2>
                 <p>Submit a link to at least one photo to publish your spot.</p>
                 <input
@@ -225,7 +208,6 @@ export default function EditSpotFrom() {
                 onChange={e => setImage4(e.target.value)}
                 value={image4}
                 />
-            </label>
             <br/>
             <button>Edit Spot</button>
         </form>

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createSpot } from "../../store/spots";
-import { spotDetails } from "../../store/spots";
+import { createSpot } from "../../../store/spots";
+import { spotDetails } from "../../../store/spots";
 
+import './CreateSpot.css'
 
 export default function CreateSpotFrom() {
     const dispatch = useDispatch();
@@ -28,6 +29,7 @@ export default function CreateSpotFrom() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setErrors([])
 
         const prevImage = {
             preview: true,
@@ -87,14 +89,16 @@ export default function CreateSpotFrom() {
 
     return (
         <>
-        <h1>Create a New Spot!</h1>
-        <h2>Where is your place located?</h2>
-        <p>Guest will only get your address once they book a reservation.</p>
-        <form onSubmit={handleSubmit}>
-            <ul>
-                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-            </ul>
-            <label>
+            <div className="page-wrapper">
+                <h1 className="newSpot-header">Create a New Spot!</h1>
+                <h2 className="newSpot-subHeader">Where is your place located?</h2>
+                <p className="description">Guest will only get your address once they book a reservation.</p>
+
+            </div>
+            <form className="spotForm" onSubmit={handleSubmit}>
+                <ul>
+                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                </ul>
                 Country
                 <input
                 type='text'
@@ -103,8 +107,6 @@ export default function CreateSpotFrom() {
                 required
                 placeholder='Country'
                 />
-            </label>
-            <label>
                 Street Address
                 <input
                 type='text'
@@ -113,8 +115,6 @@ export default function CreateSpotFrom() {
                 required
                 placeholder="Street Address"
                 />
-            </label>
-            <label>
                 City
                 <input
                 type='text'
@@ -123,8 +123,6 @@ export default function CreateSpotFrom() {
                 required
                 placeholder="City"
                 />
-            </label>
-            <label>
                 State
                 <input
                 type='text'
@@ -133,8 +131,6 @@ export default function CreateSpotFrom() {
                 required
                 placeholder="State"
                 />
-            </label>
-            <label>
                 Latitude
                 <input
                 type='text'
@@ -143,8 +139,6 @@ export default function CreateSpotFrom() {
                 required
                 placeholder="Latitude"
                 />
-            </label>
-            <label>
                 Longitude
                 <input
                 type='text'
@@ -153,30 +147,25 @@ export default function CreateSpotFrom() {
                 required
                 placeholder="Longitude"
                 />
-            </label>
-            <h2>Describe your place to guest</h2>
-            <p>Mention the best features of your space, any special amentities like fast Wi-Fi or parking, and what you love about the neighborhood.</p>
-            <label>
+                <h2 className="newSpot-subHeader">Describe your place to guest</h2>
+                <p className="description" >Mention the best features of your space, any special amentities like fast Wi-Fi or parking, and what you love about the neighborhood.</p>
                 <input
                 type='text'
                 onChange={e => setDescription(e.target.value)}
                 value={description}
                 placeholder='Please write at least 30 characters'
                 />
-            </label>
-            <label>
-                <h2>Create a title for your spot.</h2>
-                <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
+                <h2 className="newSpot-subHeader" >Create a title for your spot.</h2>
+                <p className="description"
+                >Catch guests' attention with a spot title that highlights what makes your place special.</p>
                 <input
                 type='text'
                 onChange={e => setName(e.target.value)}
                 value={name}
                 placeholder='Name of your spot'
                 />
-            </label>
-            <label>
-                <h2>Set a base price for your spot.</h2>
-                <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
+                <h2 className="newSpot-subHeader" >Set a base price for your spot.</h2>
+                <p className="description" >Competitive pricing can help your listing stand out and rank higher in search results.</p>
                 $
                 <input
                 type='number'
@@ -184,10 +173,8 @@ export default function CreateSpotFrom() {
                 value={price}
                 placeholder='Price per night (USD)'
                 />
-            </label>
-            <label>
-                <h2>Liven up your spot with photos</h2>
-                <p>Submit a link to at least one photo to publish your spot.</p>
+                <h2 className="newSpot-subHeader" >Liven up your spot with photos</h2>
+                <p className="description">Submit a link to at least one photo to publish your spot.</p>
                 <input
                 type='url'
                 placeholder="Preview Image URL"
@@ -218,9 +205,7 @@ export default function CreateSpotFrom() {
                 onChange={e => setImage4(e.target.value)}
                 value={image4}
                 />
-            </label>
-            <br/>
-            <button>Create Spot</button>
+            <button className="createSpot-button">Create Spot</button>
         </form>
         </>
     )

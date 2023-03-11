@@ -1,12 +1,12 @@
 import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useHistory } from 'react-router-dom';
-import { getCurrentSpots } from "../../store/spots";
-import OpenModalButton from "../OpenModalButton";
-import DeleteSpotButton from "./DeleteSpotModal";
+import { getCurrentSpots } from "../../../store/spots";
+import OpenModalButton from "../../OpenModalButton";
+import DeleteSpotButton from "../DeleteSpotsModal/index";
 // deleteSpot
 
-import './SpotsList.css';
+import './UserSpots.css';
 
 const UserSpots = () => {
     const dispatch = useDispatch();
@@ -46,11 +46,11 @@ const UserSpots = () => {
 
     return (
         <>
+            <h1 className="userSpot-header">Manage your Spots</h1>
             {hasSpots ? (
-                <ul>
-                    <h1>Manage your Spots</h1>
+                <ul className="spotList">
                     {Object.values(spots).map(({id, city, state, previewImage, avgRating, price}) => (
-                        <li key={id}>
+                        <li key={id} className="spot">
                             <NavLink to={`/spots/${id}`} className='spot'>
                                 <img className="preview" src={previewImage} alt="" />
                                 <p>

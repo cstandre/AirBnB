@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 // import { useHistory, Link } from "react-router-dom";
-import { useModal } from '../../context/Modal';
+import { useModal } from "../../../context/Modal";
 import { deleteReviewFetch } from "../../../store/reviews";
 
 

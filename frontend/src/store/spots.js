@@ -24,7 +24,6 @@ export const currUserSpots = (spots) => {
 }
 
 export const getOneSpot = (spot) => {
-    console.log(spot)
     return {
         type: GET_ONE,
         spot
@@ -144,6 +143,7 @@ export default function spotReducer(state = initalState, action) {
         case GET_SPOTS: {
             const newState = {};
             action.spots.Spots.forEach((spot) => (newState[spot.id] = spot))
+            // console.log(action.spotId, 1, "1")
             return newState;
         }
         case USER_SPOTS: {
@@ -152,14 +152,13 @@ export default function spotReducer(state = initalState, action) {
             return newState;
         }
         case GET_ONE:{
-            // console.log(action.spot)
             return {
                 ...state,
                 currentSpot: action.spot
             }
         }
         case ADD_SPOT: {
-            // console.log(state, action.spot)
+            // console.log(action.spot)
             const newState = { ...state };
             newState[action.spot.id] = action.spot;
             return newState;

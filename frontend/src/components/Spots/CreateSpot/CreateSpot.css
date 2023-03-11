@@ -1,0 +1,40 @@
+.newSpot-header {
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.newSpot-subHeader {
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.description {
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.spotForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 500px;
+}
+
+.createSpot-button {
+    display: flex;
+    justify-content: center;
+    background: #FF5A5F;
+    color: #FFFFFF;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.createSpot-button:hover {
+    cursor: pointer;
+}

@@ -1,0 +1,15 @@
+.spot-name {
+    font-size: 24;
+    font-weight: bold;
+}
+
+.img {
+    height: 300px;
+    width: 500px;
+}
+
+.img-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}

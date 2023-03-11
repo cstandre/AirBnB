@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from 'react-router-dom';
-import { fetchSpots } from "../../store/spots";
+import { fetchSpots } from "../../../store/spots";
 
-import './SpotsList.css';
+import './SpotsList.css'
 
 const SpotList = () => {
     const dispatch = useDispatch();
@@ -16,15 +16,15 @@ const SpotList = () => {
 
     return (
         <>
-            <ul>
+            <ul className="spotsList">
                 {Object.values(spots).map(({id, city, state, previewImage, avgRating, price}) => (
-                    <li key={id}>
-                        <NavLink to={`/spots/${id}`} className='spot'>
+                    <li key={id} className="spot">
+                        <NavLink key={id} to={`/spots/${id}`} className='spot'>
                             <img className="preview" src={previewImage} alt="" />
                             <p>
                             {city}, {state} <br/>
                             <i className="fa-solid fa-star"></i>{avgRating || 'New'} <br/>
-                            ${price} /Night
+                            ${price} night
                             </p>
                         </NavLink>
                     </li>

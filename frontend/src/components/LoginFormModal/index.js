@@ -21,7 +21,7 @@ function LoginFormModal() {
     } else {
       setIsButtonDisabled(false)
     }
-  })
+  }, [credential, password])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,7 +36,7 @@ function LoginFormModal() {
         }
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
-      });
+      },);
   }
 
 
@@ -49,35 +49,29 @@ function LoginFormModal() {
 
   return (
     <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
+      <h1 className='logIn'>Log In</h1>
+      <form className="logIn-form" onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
-        <label>
-          <input
-            type="text"
-            value={credential}
-            onChange={(e) => setCredential(e.target.value)}
-            placeholder='Username or Email'
-            required
-            className='credential'
-          />
-        </label>
-        <br/>
-        <label>
-          <input
-            type="password"
-            value={password}
-            placeholder='Password'
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <br/>
-        <button disabled={isButtonDisabled} type="submit">Log In</button>
-        <br/>
-        <button onClick={createDemo}>Demo User</button>
+              <input
+                type="text"
+                value={credential}
+                onChange={(e) => setCredential(e.target.value)}
+                placeholder='Username or Email'
+                required
+                className='userName'
+              />
+            <input
+              type="password"
+              value={password}
+              placeholder='Password'
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className='password'
+            />
+        <button className='submit' disabled={isButtonDisabled} type="submit">Log In</button>
+        <button className='demoUser' onClick={createDemo}>Demo User</button>
       </form>
     </>
   );
