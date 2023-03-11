@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
-import { createReviewFetch, getSpotReviews } from "../../store/reviews";
+import { createReviewFetch } from "../../store/reviews";
 // import { spotDetails } from "../../store/spots";
 
 
@@ -28,9 +28,8 @@ export default function CreateReviewModal({userId, spotId}) {
         }
 
         await dispatch(createReviewFetch(newReview))
-        .then(dispatch(getSpotReviews(spot)))
-        .then(history.push('/spots/${spot}'))
-        .then(closeModal)
+        .then(history.push(`/spots/${spot}`))
+        .then(closeModal())
         .catch(async (res) => {
             if(res.status === 403) {
                 const errorMsg = "User already has a review for this spot"

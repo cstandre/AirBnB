@@ -31,7 +31,7 @@ export const getSpotReviews = (spotId) => async (dispatch) => {
 
     if (res.ok) {
         const reviews = await res.json()
-        dispatch(getReviews(reviews));
+        dispatch(getReviews(reviews))
         return reviews;
     }
 }
@@ -45,7 +45,7 @@ export const createReviewFetch = (review) => async (dispatch) => {
 
     if (res.ok) {
         const newReview = await res.json();
-        dispatch(createReview(newReview));
+        dispatch(createReview(newReview)).then(dispatch(getSpotReviews(spot)))
         return newReview;
     }
 };
