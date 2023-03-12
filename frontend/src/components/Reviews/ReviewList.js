@@ -6,9 +6,9 @@ import OpenModalButton from "../OpenModalButton";
 import CreateReviewModal from "./CreateReviewModal/CreateReviewModal";
 import DeleteReviewButton from "./DeleteReview/DeleteReviewButton";
 
+import './ReviewList.css'
 
 const ReviewList = ({spotOwnerId}) => {
-    console.log(spotOwnerId)
     const { spotId } = useParams();
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
@@ -54,12 +54,16 @@ const ReviewList = ({spotOwnerId}) => {
                 )}
                 {Object.values(reviews).map(({id, review, User}) => (
                     (User &&
-                    <li key={id}>
+                    <li className="review-details" key={id}>
+                        <div>
                         {User.firstName}
-                        <br/>
+                        </div>
+                        <div>
                         {month} {year}
-                        <br/>
+                        </div>
+                        <div>
                         {review}
+                        </div>
                         {sessionUser !== undefined && User.id === sessionUser?.id && (
                             <OpenModalButton
                                 buttonText="Delete"

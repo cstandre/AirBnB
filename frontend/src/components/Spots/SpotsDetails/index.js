@@ -49,7 +49,10 @@ export default function SpotDetails () {
                             <div>
                                 <i className="fa-solid fa-star"></i>
                                 {spot.avgRating} {spot.numReviews} reviews
-                                <ReviewList />
+                               { console.log("is this hitting?")}
+                                {sessionUser && (
+                                    <ReviewList />
+                                )}
                             </div>
                         ): (sessionUser !== undefined && spot.Owner?.id !== sessionUser.id && spot.numReviews === 1) ? (
                             <div>
