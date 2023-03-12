@@ -16,7 +16,7 @@ export default function DeleteSpotButton({id}) {
     return (
         <div className="delete-container">
             <h1 className="confirmation">Confirm Delete</h1>
-            <p className="message">Are you sure you want to remove this from your listings?</p>
+            <p className="message">Are you sure you want to remove this spot?</p>
             <button className="yes" onClick={handleClick}>Yes (Delete Spot)</button>
             <button className="no" onClick={closeModal}>No (Keep Spot)</button>
         </div>

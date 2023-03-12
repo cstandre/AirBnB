@@ -48,23 +48,31 @@ const UserSpots = () => {
         <>
             <h1 className="userSpot-header">Manage your Spots</h1>
             {hasSpots ? (
-                <ul className="spotList">
+                <ul className="spotsList">
                     {Object.values(spots).map(({id, city, state, previewImage, avgRating, price}) => (
                         <li key={id} className="spot">
                             <NavLink to={`/spots/${id}`} className='spot'>
                                 <img className="preview" src={previewImage} alt="" />
-                                <p>
-                                {city}, {state} <br/>
-                                {avgRating || 'New'} <br/>
-                                ${price} /Night
+                                <p className="detail-container">
+                                <div>
+                                {city}, {state}
+                                </div>
+                                <div className="rating-container">
+                                <i className="fa-solid fa-star"></i>{avgRating || 'New'}
+                                </div>
+                                <div>
+                                ${price} night
+                                </div>
                                 </p>
                             </NavLink>
-                            <button onClick={() => history.push(`/spots/${id}/edit`)}>Edit Spot</button>
+                            <div className="buttons">
+                            <button onClick={() => history.push(`/spots/${id}/edit`)}>Update</button>
                             <OpenModalButton
                                 buttonText="Delete"
                                 onButtonClick={closeModal}
                                 modalComponent={<DeleteSpotButton id={id} />}
                             />
+                            </div>
                         </li>
                     ))}
                 </ul>

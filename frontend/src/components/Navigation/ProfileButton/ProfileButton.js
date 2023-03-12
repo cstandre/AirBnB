@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
-import * as sessionActions from '../../store/session';
-import OpenModalMenuItem from '../Navigation/OpenModalMenuItems';
-import LoginFormModal from '../LoginFormModal';
-import SignupFormModal from '../SignupFormModal';
+import * as sessionActions from '../../../store/session';
+import OpenModalMenuItem from '../OpenModalMenuItems/OpenModalMenuItems';
+import LoginFormModal from '../../LoginFormModal';
+import SignupFormModal from '../../SignupFormModal';
 
 
 import './ProfileButton.css'
@@ -44,7 +44,7 @@ function ProfileButton({ user }) {
   };
 
 
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  const ulClassName = "profile-dropdown" + (showMenu ? " showing" : " hidden");
 
   return (
     <>
@@ -57,19 +57,21 @@ function ProfileButton({ user }) {
             <li>Hello, {user.firstName}</li>
             <li>{user.username}</li>
             <li>{user.email}</li>
+              <button className="log-out" onClick={logout}>Log Out</button>
             <li>
-              <button onClick={logout}>Log Out</button>
-              <Link to='/spots/current'>Manage Spots</Link>
+              <Link className="manage-spots" to='/spots/current'>Manage Spots</Link>
             </li>
           </>
         ) : (
           <>
             <OpenModalMenuItem
+              className="log-in"
               itemText="Log In"
               onItemClick={closeMenu}
               modalComponent={<LoginFormModal />}
             />
             <OpenModalMenuItem
+              className="sign-up"
               itemText="Sign Up"
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}

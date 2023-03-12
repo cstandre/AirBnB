@@ -56,7 +56,7 @@ export default function CreateSpotFrom() {
             url: image4
         }
 
-        const handelImages = [prevImage, addImage1, addImage2, addImage3, addImage4]
+        const handelImages = [addImage4, addImage3, addImage2, addImage1, prevImage]
 
         const newSpot = {
             owner: sessionUser,
@@ -180,6 +180,7 @@ export default function CreateSpotFrom() {
                 placeholder="Preview Image URL"
                 onChange={e => setPreviewImage(e.target.value)}
                 value={previewImage}
+                required
                 />
                 <input
                 type='url'

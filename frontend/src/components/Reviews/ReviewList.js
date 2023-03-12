@@ -3,10 +3,12 @@ import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSpotReviews } from "../../store/reviews";
 import OpenModalButton from "../OpenModalButton";
+import CreateReviewModal from "./CreateReviewModal/CreateReviewModal";
 import DeleteReviewButton from "./DeleteReview/DeleteReviewButton";
 
 
-const ReviewList = () => {
+const ReviewList = ({spotOwnerId}) => {
+    console.log(spotOwnerId)
     const { spotId } = useParams();
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
@@ -37,11 +39,21 @@ const ReviewList = () => {
     const month = dateArr[1];
     const year = dateArr[3];
 
+    const userReview = Object.values(reviews).filter((review) => review.User?.id === sessionUser?.id)
+
     return (
         <>
         {reviews && (
             <div>
+                {sessionUser !== undefined && !userReview.length && spotOwnerId !== sessionUser?.id && (
+                    <OpenModalButton
+                        buttonText="Post Your Review"
+                        onButtonClick={closeModal}
+                        modalComponent={<CreateReviewModal userId={sessionUser?.id} spotId={spotId}/>}
+                    />
+                )}
                 {Object.values(reviews).map(({id, review, User}) => (
+                    (User &&
                     <li key={id}>
                         {User.firstName}
                         <br/>
@@ -52,10 +64,10 @@ const ReviewList = () => {
                             <OpenModalButton
                                 buttonText="Delete"
                                 onButtonClick={closeModal}
-                                modalComponent={<DeleteReviewButton id={id}/>}
+                                modalComponent={<DeleteReviewButton id={id} spotId={spotId} />}
                             />
                         )}
-                    </li>
+                    </li>)
                 ))}
             </div>
         )}

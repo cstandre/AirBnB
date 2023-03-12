@@ -1,0 +1,30 @@
+.hidden {
+    display: none;
+}
+
+.fa-solid:hover {
+    cursor: pointer;
+}
+
+.showing {
+    display: grid;
+    grid-template-rows: 1fr, 1fr, 1fr, 2fr, 1fr
+}
+
+.log-out {
+    display: grid;
+    background: #FF5A5F;
+    color: #FFFFFF;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.log-out:hover {
+    cursor: pointer;
+}
+
+.manage-spots {
+    text-decoration: none;
+}
+

@@ -21,10 +21,14 @@ const SpotList = () => {
                     <li key={id} className="spot">
                         <NavLink key={id} to={`/spots/${id}`} className='spot'>
                             <img className="preview" src={previewImage} alt="" />
-                            <p>
-                            {city}, {state} <br/>
-                            <i className="fa-solid fa-star"></i>{avgRating || 'New'} <br/>
-                            ${price} night
+                            <p className="detail-container">
+                            <div>{city}, {state}</div>
+                            <div className="rating-container">
+                                <i className="fa-solid fa-star"></i>{avgRating || 'New'}
+                            </div>
+                            <div>
+                                ${price} night
+                            </div>
                             </p>
                         </NavLink>
                     </li>

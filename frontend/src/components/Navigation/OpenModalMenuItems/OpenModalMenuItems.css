@@ -1,0 +1,7 @@
+.item {
+    list-style: none;
+}
+
+.item:hover {
+    cursor: pointer;
+}

@@ -31,6 +31,7 @@ export const getSpotReviews = (spotId) => async (dispatch) => {
 
     if (res.ok) {
         const reviews = await res.json()
+        console.log(reviews)
         dispatch(getReviews(reviews))
         return reviews;
     }
@@ -45,13 +46,12 @@ export const createReviewFetch = (review) => async (dispatch) => {
 
     if (res.ok) {
         const newReview = await res.json();
-        dispatch(createReview(newReview)).then(dispatch(getSpotReviews(spot)))
+        dispatch(createReview(newReview))
         return newReview;
     }
 };
 
-export const deleteReviewFetch = (reviewId) => async (dispatch) => {
-    console.log(reviewId)
+export const deleteReviewFetch = (reviewId, spotId) => async (dispatch) => {
     const res = await csrfFetch(`/api/reviews/${reviewId}`, {
         method: 'DELETE'
     });
@@ -73,13 +73,15 @@ export default function reviewReducer(state = initalState, action) {
             return newState
         }
         case CREATE_REVIEW: {
-            const newState = { ...state };
-            newState[action.review.id] = action.review;
-            return newState;
+            return {
+                ...state,
+                [action.review.id]: action.review
+            };
         }
         case DELETE_REVIEW: {
+            console.log(action)
             const newState = { ...state };
-            delete newState.spots[action.spotId];
+            delete newState[action.review];
             return newState;
         }
         default:

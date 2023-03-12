@@ -1,5 +1,10 @@
+.navigation {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    list-style: none;
+}
+
 .logo {
     height: 50px;
     list-style-type: none;
 };
-

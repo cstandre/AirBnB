@@ -28,43 +28,11 @@ export default function EditSpotFrom() {
     const [name, setName] = useState(spot.name);
     const [description, setDescription] = useState(spot.description);
     const [price, setPrice] = useState(spot.price);
-    const [previewImage, setPreviewImage] = useState(spot.previewImage);
-    const [image1, setImage1] = useState('');
-    const [image2, setImage2] = useState('');
-    const [image3, setImage3] = useState('');
-    const [image4, setImage4] = useState('');
     const [errors, setErrors] = useState([]);
 
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
-        const prevImage = {
-            preview: true,
-            url: previewImage
-        }
-
-        const addImage1 = {
-            preview: false,
-            url: image1
-        }
-
-        const addImage2 = {
-            preview: false,
-            url: image2
-        }
-
-        const addImage3 = {
-            preview: false,
-            url: image3
-        }
-
-        const addImage4 = {
-            preview: false,
-            url: image4
-        }
-
-        const handelImages = [prevImage, addImage1, addImage2, addImage3, addImage4]
 
         const editSpot = {
             address,
@@ -76,7 +44,6 @@ export default function EditSpotFrom() {
             name,
             description,
             price,
-            handelImages
         };
 
         await dispatch(editSpotForm(editSpot, spot.id))
@@ -95,7 +62,7 @@ export default function EditSpotFrom() {
     return (
         <>
         <div className="page-wrapper">
-            <h1 className="editSpot-header">Need to make a change?</h1>
+            <h1 className="editSpot-header">Update your Spot</h1>
             <h2 className="editSpot-subHeader">Where is your place located?</h2>
             <p className="description">Guest will only get your address once they book a reservation.</p>
         </div>
@@ -176,40 +143,7 @@ export default function EditSpotFrom() {
                 value={price}
                 placeholder='Price per night (USD)'
                 />
-                <h2>Liven up your spot with photos</h2>
-                <p>Submit a link to at least one photo to publish your spot.</p>
-                <input
-                type='url'
-                placeholder="Preview Image Url"
-                onChange={e => setPreviewImage(e.target.value)}
-                value={previewImage}
-                />
-                <input
-                type='url'
-                placeholder="Image URL"
-                onChange={e => setImage1(e.target.value)}
-                value={image1}
-                />
-                <input
-                type='url'
-                placeholder="Image URL"
-                onChange={e => setImage2(e.target.value)}
-                value={image2}
-                />
-                <input
-                type='url'
-                placeholder="Image URL"
-                onChange={e => setImage3(e.target.value)}
-                value={image3}
-                />
-                <input
-                type='url'
-                placeholder="Image URL"
-                onChange={e => setImage4(e.target.value)}
-                value={image4}
-                />
-            <br/>
-            <button>Edit Spot</button>
+            <button>Update your Spot</button>
         </form>
         </>
     )

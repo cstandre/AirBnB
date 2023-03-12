@@ -46,6 +46,9 @@ const validateReview = [
     check('review')
     .exists()
     .withMessage('Review text is required'),
+    check('review')
+    .isLength({min: 10, max: 255})
+    .withMessage('Review cannot be longer than 255 characters'),
     check('stars')
     .exists()
     .isNumeric({min: 1, max: 5})
@@ -93,11 +96,11 @@ router.get('/', async (req, res) => {
     });
 
     spotList.forEach(spot => {
-        spot.SpotImages.forEach(image => {
+        spot.SpotImages.forEach((image) => {
             if (image.dataValues.preview) {
-                spot.dataValues.previewImage = image.url
+                return spot.dataValues.previewImage = image.url
             } else {
-                spot.dataValues.previewImage = null
+                // spot.dataValues.previewImage = null
             }
             delete spot.dataValues.SpotImages;
         })
@@ -107,7 +110,7 @@ router.get('/', async (req, res) => {
                 sum += review.dataValues.stars
             })
             const avg = sum / spot.Reviews.length;
-            spot.dataValues.avgRating = avg
+            spot.dataValues.avgRating = avg.toFixed(1)
         } else {
             spot.dataValues.avgRating = null
         }
@@ -135,7 +138,7 @@ router.get('/current', requireAuth, async (req, res) => {
             if (image.dataValues.preview) {
                 spot.dataValues.previewImage = image.url
             } else {
-                spot.dataValues.previewImage = null
+                // spot.dataValues.previewImage = null
             }
             delete spot.dataValues.SpotImages;
         })
@@ -160,7 +163,7 @@ router.get('/:spotId', async (req, res) => {
     const spotDetails = await Spot.findByPk(req.params.spotId, {
         include: [
             {
-                model: Review
+                model: Review,
             },
             {
                 model: SpotImage,
@@ -190,7 +193,7 @@ router.get('/:spotId', async (req, res) => {
             count += 1
         })
         const avg = sum / spotDetails.Reviews.length;
-        spotDetails.dataValues.avgRating = avg;
+        spotDetails.dataValues.avgRating = avg.toFixed(1);
         spotDetails.dataValues.numReviews = count;
     } else {
         spotDetails.dataValues.avgRating = null;
