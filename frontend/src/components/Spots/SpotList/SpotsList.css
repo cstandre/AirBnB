@@ -1,0 +1,31 @@
+.spotsList {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding-top: 100px;
+    text-decoration: none;
+}
+
+.preview {
+    height: 200px;
+    width: 300px;
+    border-radius: 15px;
+}
+
+.spot {
+    list-style: none;
+    text-decoration: none;
+    width: 100%;
+    margin: auto;
+}
+
+.detail-container {
+    display: grid;
+    justify-self: center;
+    width: 250px;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.rating-container {
+    justify-self: end;
+}

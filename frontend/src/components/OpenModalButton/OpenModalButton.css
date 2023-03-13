@@ -1,0 +1,8 @@
+.modal-button {
+    display: flex;
+    justify-content: center;
+    background: #FF5A5F;
+    color: #FFFFFF;
+    border: 1px solid black;
+    padding: 5px;
+}

@@ -1,6 +1,8 @@
 import React from "react";
 import { useModal } from "../../context/Modal";
 
+import './OpenModalButton.css';
+
 export default function OpenModalButton ({ modalComponent, buttonText, onButtonClick, onModalClose}) {
     const {setModalContent, setOnModalClose} = useModal();
 
@@ -11,6 +13,6 @@ export default function OpenModalButton ({ modalComponent, buttonText, onButtonC
     }
 
     return (
-        <button onClick={onClick}>{buttonText}</button>
+        <button className="modal-button" onClick={onClick}>{buttonText}</button>
     );
 };

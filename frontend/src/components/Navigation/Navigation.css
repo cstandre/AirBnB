@@ -1,0 +1,38 @@
+.navigation {
+    display: grid;
+    grid-template-columns: 5fr 2fr 1fr;
+    list-style: none;
+}
+
+.logo {
+    height: 50px;
+    list-style-type: none;
+};
+
+.menu {
+    display: grid;
+    justify-content: start;
+}
+
+.menu-box {
+    display: grid;
+    justify-content: start;
+    height: 30px;
+}
+
+.spot-box {
+    display: grid;
+    text-decoration: none;
+    justify-items: end;
+}
+
+.createSpot-button-main {
+    display: grid;
+    justify-self: end;
+    text-align: center;
+    padding: 2px;
+    width: 130px;
+    background: #FF5A5F;
+    color: #FFFFFF;
+    border: 1px solid black;
+}

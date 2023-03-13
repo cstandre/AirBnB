@@ -59,7 +59,7 @@ router.post(
 
       const user = await User.signup({ firstName, lastName, email, username, password });
 
-      console.log(setTokenCookie)
+      await setTokenCookie(res, user)
 
       return res.json({
         user

@@ -1,1 +1,15 @@
+.signUp {
+    display: flex;
+    justify-content: center;
+    font-size: 24pt;
+    font-weight: bold;
+}
 
+.signUp-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 230px;
+    width: 300px;
+    padding: 20px;
+}

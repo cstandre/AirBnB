@@ -1,0 +1,26 @@
+.review-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
+
+.review-header {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.review-input {
+    height: 100px;
+    width: 200px;
+}
+
+.review-submit {
+    display: flex;
+    justify-content: center;
+    background: #FF5A5F;
+    color: #FFFFFF;
+    border: 1px solid black;
+    padding: 5px;
+}
