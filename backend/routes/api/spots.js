@@ -167,7 +167,8 @@ router.get('/:spotId', async (req, res) => {
             },
             {
                 model: SpotImage,
-                attributes: ['id', 'url', 'preview']
+                attributes: ['id', 'url', 'preview'],
+                order: ['id', 'ASC']
             },
             {
                 model: User,
@@ -249,7 +250,6 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
         const spotImage = await SpotImage.findByPk(newImgId, {
             attributes: ['id', 'url', 'preview']
         })
-
         res.json(spotImage);
     } else {
         res.status(404).json({

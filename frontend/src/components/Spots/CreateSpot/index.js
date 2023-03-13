@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createSpot } from "../../../store/spots";
-import { spotDetails } from "../../../store/spots";
+// import { spotDetails } from "../../../store/spots";
 
 import './CreateSpot.css'
 
@@ -56,7 +56,7 @@ export default function CreateSpotFrom() {
             url: image4
         }
 
-        const handelImages = [addImage4, addImage3, addImage2, addImage1, prevImage]
+        const handelImages = [prevImage, addImage1, addImage2, addImage3, addImage4]
 
         const newSpot = {
             owner: sessionUser,
@@ -80,7 +80,7 @@ export default function CreateSpotFrom() {
             }
         })
         if (spot) {
-            await dispatch(spotDetails(spot.id))
+            // await dispatch(spotDetails(spot.id))
             history.push(`/spots/${spot.id}`)
         };
 

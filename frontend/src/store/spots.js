@@ -66,6 +66,7 @@ export const spotDetails = (spotId) => async (dispatch) => {
 
     if (res.ok) {
         const spot = await res.json();
+        spot.SpotImages.reverse()
         dispatch(getOneSpot(spot));
         return spot;
     }
@@ -81,15 +82,17 @@ export const createSpot = (details) => async (dispatch) => {
     if (spotFetch.ok) {
         const spot = await spotFetch.json();
 
+        const imgArr = [];
         for await (let images of handelImages) {
             const imgFetch = await csrfFetch(`/api/spots/${spot.id}/images`, {
                 method: 'POST',
                 body: JSON.stringify(images)
             });
-            const image = await imgFetch.json();
-            dispatch(addImage(image));
+            const image = await imgFetch.json()
+            imgArr.push(image)
         }
 
+        dispatch(addImage(imgArr));
         dispatch(addSpot(spot));
         return spot;
     }
