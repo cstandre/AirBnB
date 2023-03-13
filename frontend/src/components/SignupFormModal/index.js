@@ -19,10 +19,7 @@ function SignupFormModal() {
 
     const onSubmit = e => {
         e.preventDefault();
-<<<<<<< HEAD
-        console.log("onSubmit")
-=======
->>>>>>> reviews-frontend
+        // console.log("onSubmit")
         if (password === confirmPassword) {
             setErrors([]);
             return dispatch(sessionAction.signup({ username, firstName, lastName, email, password}))

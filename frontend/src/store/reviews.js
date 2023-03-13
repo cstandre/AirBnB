@@ -31,7 +31,7 @@ export const getSpotReviews = (spotId) => async (dispatch) => {
 
     if (res.ok) {
         const reviews = await res.json()
-        console.log(reviews)
+        // console.log(reviews)
         dispatch(getReviews(reviews))
         return reviews;
     }
@@ -79,7 +79,7 @@ export default function reviewReducer(state = initalState, action) {
             };
         }
         case DELETE_REVIEW: {
-            console.log(action)
+            // console.log(action)
             const newState = { ...state };
             delete newState[action.review];
             return newState;
