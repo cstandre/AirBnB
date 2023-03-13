@@ -14,8 +14,8 @@ export default function CreateSpotFrom() {
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [country, setCountry] = useState('');
-    const [lat, setLat] = useState('');
-    const [lng, setLng] = useState('');
+    const [lat] = useState(20.20);
+    const [lng] = useState(20.20);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
@@ -130,22 +130,6 @@ export default function CreateSpotFrom() {
                 value={state}
                 required
                 placeholder="State"
-                />
-                Latitude
-                <input
-                type='text'
-                onChange={e => setLat(e.target.value)}
-                value={lat}
-                required
-                placeholder="Latitude"
-                />
-                Longitude
-                <input
-                type='text'
-                onChange={e => setLng(e.target.value)}
-                value={lng}
-                required
-                placeholder="Longitude"
                 />
                 <h2 className="newSpot-subHeader">Describe your place to guest</h2>
                 <p className="description" >Mention the best features of your space, any special amentities like fast Wi-Fi or parking, and what you love about the neighborhood.</p>

@@ -23,8 +23,8 @@ export default function EditSpotFrom() {
     const [city, setCity] = useState(spot.city);
     const [state, setState] = useState(spot.state);
     const [country, setCountry] = useState(spot.country);
-    const [lat, setLat] = useState(spot.lat);
-    const [lng, setLng] = useState(spot.lng);
+    const [lat] = useState(spot.lat);
+    const [lng] = useState(spot.lng);
     const [name, setName] = useState(spot.name);
     const [description, setDescription] = useState(spot.description);
     const [price, setPrice] = useState(spot.price);
@@ -46,14 +46,15 @@ export default function EditSpotFrom() {
             price,
         };
 
-        await dispatch(editSpotForm(editSpot, spot.id))
+        const updatedSpot = await dispatch(editSpotForm(editSpot, spotId))
         .catch(async (res) => {
             if (res.status === 400) {
                 const errorMsg = "Spot description must be at least 30 charactors";
                 setErrors([errorMsg])
             }
         })
-        if (spot) {
+
+        if (updatedSpot) {
             await dispatch(spotDetails(spot.id))
             history.push(`/spots/${spot.id}`)
         }
@@ -102,22 +103,6 @@ export default function EditSpotFrom() {
                 value={state}
                 required
                 placeholder="State"
-                />
-                Latitude
-                <input
-                type='text'
-                onChange={e => setLat(e.target.value)}
-                value={lat}
-                required
-                placeholder="Latitude"
-                />
-                Longitude
-                <input
-                type='text'
-                onChange={e => setLng(e.target.value)}
-                value={lng}
-                required
-                placeholder="Longitude"
                 />
                 <h2 className="editSpot-subHeader">Describe your place to guest</h2>
                 <p className="description">Mention the best features of your space, any special amentities like fast Wi-Fi or parking, and what you love about the neighborhood.</p>
