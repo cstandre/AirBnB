@@ -8,7 +8,11 @@
 
 .showing {
     display: grid;
-    grid-template-rows: 1fr, 1fr, 1fr, 2fr, 1fr
+    grid-template-rows: 1fr, 1fr, 1fr, 2fr, 1fr;
+    position: relative;
+    background-color: #FFFFFF;
+    list-style: none;
+    width: 200px;
 }
 
 .log-out {
@@ -25,6 +29,6 @@
 }
 
 .manage-spots {
-    text-decoration: none;
+    background-color: #FFFFFF;
+    border: 0px;
 }
-

@@ -56,7 +56,7 @@ export default function CreateReviewModal({userId, spotId}) {
         <>
             <h1 className="review-header">How was your stay?</h1>
             <form onSubmit={handleSubmit}>
-                <ul>
+                <ul className="errors">
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
                 <div className="review-container">

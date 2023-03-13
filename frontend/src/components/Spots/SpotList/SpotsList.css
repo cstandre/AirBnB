@@ -1,6 +1,7 @@
 .spotsList {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    padding-top: 100px;
     text-decoration: none;
 }
 

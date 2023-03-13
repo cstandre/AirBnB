@@ -8,10 +8,17 @@
 .logIn-form {
     display: flex;
     flex-direction: column;
+    align-content: center;
     justify-content: space-around;
     height: 150px;
     width: 200px;
     padding: 20px;
+}
+
+.errors {
+    list-style: none;
+    padding: 0px;
+    color: #FF5A5F;
 }
 
 input {

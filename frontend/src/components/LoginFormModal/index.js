@@ -51,7 +51,7 @@ function LoginFormModal() {
     <>
       <h1 className='logIn'>Log In</h1>
       <form className="logIn-form" onSubmit={handleSubmit}>
-        <ul>
+        <ul className='errors'>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
               <input

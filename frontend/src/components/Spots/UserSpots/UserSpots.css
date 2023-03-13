@@ -1,6 +1,6 @@
-.spotsList {
+.userList {
     display: grid;
-    grid-template-columns: 1fr, 1fr, 1fr, 1fr;
+    grid-template-columns: repeat(4, 1fr);
     text-decoration: none;
 }
 
@@ -31,6 +31,37 @@
 
 
 .buttons {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100px;
+    height: 20px;
+}
+
+.update-button {
+    justify-content: center;
+    background: #FF5A5F;
+    color: #FFFFFF;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.delete-button-userPage {
+    justify-content: center;
+    background: #FF5A5F;
+    color: #FFFFFF;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.userSpot-header {
+    padding-left: 40px;
+}
+
+.newSpot-button {
+    margin-left: 40px;
+    justify-content: center;
+    background: #FF5A5F;
+    color: #FFFFFF;
+    border: 1px solid black;
+    padding: 5px;
 }

@@ -3,17 +3,75 @@
     font-weight: bold;
 }
 
-.img {
-    height: 190px;
-    width: 265px;
+.spot-description {
+    font-size: 14px;
+    font-weight: normal;
 }
 
-.img-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    width: 1000px;
-}
 
 .rating {
     text-decoration: none;
 }
+
+.img-container {
+    display: grid;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 20px;
+    margin-right: 10px;
+    justify-items: center;
+    width: 1200px;
+    grid-template-areas: "img0 img1 img2"
+    "img0 img3 img4";
+}
+.img0 {
+    grid-area: img0;
+    height: 400px;
+    width: 500px;
+}
+
+.img1 {
+    grid-area: img1;
+    height: 200px;
+    width: 300px;
+}
+
+.img2 {
+    grid-area: img2;
+    height: 200px;
+    width: 300px;
+}
+
+.img3 {
+    grid-area: img3;
+    height: 200px;
+    width: 300px;
+}
+
+.img4 {
+    grid-area: img4;
+    height: 200px;
+    width: 300px;
+}
+
+.new-review {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.review-header2 {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+}
+
+.space {
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+/*
+.side-box {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr)
+} */

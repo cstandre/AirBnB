@@ -91,12 +91,12 @@ export default function CreateSpotFrom() {
         <>
             <div className="page-wrapper">
                 <h1 className="newSpot-header">Create a New Spot!</h1>
+                <div className="category-header">
                 <h2 className="newSpot-subHeader">Where is your place located?</h2>
                 <p className="description">Guest will only get your address once they book a reservation.</p>
-
-            </div>
+                </div>
             <form className="spotForm" onSubmit={handleSubmit}>
-                <ul>
+                <ul className="errors">
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
                 Country
@@ -150,6 +150,7 @@ export default function CreateSpotFrom() {
                 <h2 className="newSpot-subHeader">Describe your place to guest</h2>
                 <p className="description" >Mention the best features of your space, any special amentities like fast Wi-Fi or parking, and what you love about the neighborhood.</p>
                 <input
+                className="input-description"
                 type='text'
                 onChange={e => setDescription(e.target.value)}
                 value={description}
@@ -166,13 +167,16 @@ export default function CreateSpotFrom() {
                 />
                 <h2 className="newSpot-subHeader" >Set a base price for your spot.</h2>
                 <p className="description" >Competitive pricing can help your listing stand out and rank higher in search results.</p>
+                <div>
                 $
                 <input
                 type='number'
                 onChange={e => setPrice(e.target.value)}
                 value={price}
+                min='1'
                 placeholder='Price per night (USD)'
                 />
+                </div>
                 <h2 className="newSpot-subHeader" >Liven up your spot with photos</h2>
                 <p className="description">Submit a link to at least one photo to publish your spot.</p>
                 <input
@@ -200,14 +204,18 @@ export default function CreateSpotFrom() {
                 onChange={e => setImage3(e.target.value)}
                 value={image3}
                 />
+                <div className="end-form">
                 <input
+                className="last-input"
                 type='url'
                 placeholder="Image URL"
                 onChange={e => setImage4(e.target.value)}
                 value={image4}
                 />
+                </div>
             <button className="createSpot-button">Create Spot</button>
         </form>
+        </div>
         </>
     )
 }

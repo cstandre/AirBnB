@@ -1,3 +1,8 @@
 .review-details {
     list-style: none;
 }
+
+.reviewer {
+    font-size: 18px;
+    font-weight: bold;
+}

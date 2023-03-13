@@ -55,7 +55,7 @@ const ReviewList = ({spotOwnerId}) => {
                 {Object.values(reviews).map(({id, review, User}) => (
                     (User &&
                     <li className="review-details" key={id}>
-                        <div>
+                        <div className="reviewer">
                         {User.firstName}
                         </div>
                         <div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import * as sessionActions from '../../../store/session';
 import OpenModalMenuItem from '../OpenModalMenuItems/OpenModalMenuItems';
 import LoginFormModal from '../../LoginFormModal';
@@ -43,6 +43,12 @@ function ProfileButton({ user }) {
     closeMenu();
   };
 
+  const handelClick = (e) => {
+    e.preventDefault();
+    history.push('/spots/current')
+    closeMenu();
+  }
+
 
   const ulClassName = "profile-dropdown" + (showMenu ? " showing" : " hidden");
 
@@ -58,9 +64,9 @@ function ProfileButton({ user }) {
             <li>{user.username}</li>
             <li>{user.email}</li>
               <button className="log-out" onClick={logout}>Log Out</button>
-            <li>
-              <Link className="manage-spots" to='/spots/current'>Manage Spots</Link>
-            </li>
+            <button className="manage-spots" onClick={handelClick}>
+              Manage Spots
+            </button>
           </>
         ) : (
           <>

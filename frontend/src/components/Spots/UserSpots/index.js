@@ -46,9 +46,10 @@ const UserSpots = () => {
 
     return (
         <>
-            <h1 className="userSpot-header">Manage your Spots</h1>
+        <h1 className="userSpot-header">Manage your Spots</h1>
+        <button className='newSpot-button' onClick={() => history.push(`/spots/new`)}>Create a New Spot</button>
             {hasSpots ? (
-                <ul className="spotsList">
+                <ul className="userList">
                     {Object.values(spots).map(({id, city, state, previewImage, avgRating, price}) => (
                         <li key={id} className="spot">
                             <NavLink to={`/spots/${id}`} className='spot'>
@@ -66,7 +67,7 @@ const UserSpots = () => {
                                 </p>
                             </NavLink>
                             <div className="buttons">
-                            <button onClick={() => history.push(`/spots/${id}/edit`)}>Update</button>
+                            <button className="update-button" onClick={() => history.push(`/spots/${id}/edit`)}>Update</button>
                             <OpenModalButton
                                 buttonText="Delete"
                                 onButtonClick={closeModal}
@@ -74,10 +75,12 @@ const UserSpots = () => {
                             />
                             </div>
                         </li>
-                    ))}
-                </ul>
+                        ))}
+                    </ul>
             ): (
-                <h1>You don't have any spots to manage, click the link above to get started</h1>
+                <div>
+                    <h2>You don't have any spots to manage</h2>
+                </div>
 
             )}
         </>

@@ -63,11 +63,12 @@ export default function EditSpotFrom() {
         <>
         <div className="page-wrapper">
             <h1 className="editSpot-header">Update your Spot</h1>
+            <div className="category-header">
             <h2 className="editSpot-subHeader">Where is your place located?</h2>
             <p className="description">Guest will only get your address once they book a reservation.</p>
-        </div>
+            </div>
         <form className="spotForm" onSubmit={handleSubmit}>
-            <ul>
+            <ul className="errors">
                 {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
                 Country
@@ -118,33 +119,38 @@ export default function EditSpotFrom() {
                 required
                 placeholder="Longitude"
                 />
-                <h2 className="newSpot-subHeader">Describe your place to guest</h2>
+                <h2 className="editSpot-subHeader">Describe your place to guest</h2>
                 <p className="description">Mention the best features of your space, any special amentities like fast Wi-Fi or parking, and what you love about the neighborhood.</p>
                 <input
+                className="input-description"
                 type='text'
                 onChange={e => setDescription(e.target.value)}
                 value={description}
                 placeholder='Please write at least 30 characters'
                 />
-                <h2>Create a title for your spot.</h2>
-                <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
+                <h2 className="editSpot-subHeader">Create a title for your spot.</h2>
+                <p className="description">Catch guests' attention with a spot title that highlights what makes your place special.</p>
                 <input
                 type='text'
                 onChange={e => setName(e.target.value)}
                 value={name}
                 placeholder='Name of your spot'
                 />
-                <h2>Set a base price for your spot.</h2>
-                <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
+                <h2 className="editSpot-subHeader">Set a base price for your spot.</h2>
+                <p className="description">Competitive pricing can help your listing stand out and rank higher in search results.</p>
+                <div className="price">
                 $
                 <input
                 type='number'
+                min='1'
                 onChange={e => setPrice(e.target.value)}
                 value={price}
                 placeholder='Price per night (USD)'
                 />
-            <button>Update your Spot</button>
+                </div>
+            <button className="update-button">Update your Spot</button>
         </form>
+        </div>
         </>
     )
 }

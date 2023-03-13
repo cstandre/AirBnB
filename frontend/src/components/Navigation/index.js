@@ -15,13 +15,13 @@ function Navigation({ isLoaded }){
       </li>
       <li>
         {sessionUser && (
-          <div>
-            <Link to="/spots/new">Create a New Spot</Link>
+          <div className='spot-box'>
+            <Link className='createSpot-button' to="/spots/new">Create a New Spot</Link>
           </div>
         )}
       </li>
       {isLoaded && (
-        <li>
+        <li className='menu-box'>
           <ProfileButton className='menu' user={sessionUser} />
         </li>
       )}
