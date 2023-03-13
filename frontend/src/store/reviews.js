@@ -32,7 +32,7 @@ export const getSpotReviews = (spotId) => async (dispatch) => {
 
     if (res.ok) {
         const reviews = await res.json()
-        console.log(reviews)
+        // console.log(reviews)
         dispatch(getReviews(reviews))
         return reviews;
     }
