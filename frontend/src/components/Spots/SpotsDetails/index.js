@@ -35,8 +35,9 @@ export default function SpotDetails () {
                                 {spot.SpotImages && spot.SpotImages.map((image, i) =>
                                 <img key={image.id} className={`img${i}`} src={image.url} alt='' />)}
                             </div>
+                        <div className="mid">
                         <div>
-                        {spot.Owner && <h2>
+                        {spot.Owner && <h2 className="host">
                             Hosted By {spot.Owner?.firstName} {spot.Owner?.lastName}
                         </h2>}
                         </div>
@@ -45,42 +46,51 @@ export default function SpotDetails () {
                             {spot.description}
                             </p>
                         </div>
-                        {/* <div>
+                        <div className="box">
                         {(spot.numReviews > 1) ? (
-                            <h2>
+                            <div>
+                            <h2 className="review-header3">
                             <i className="fa-solid fa-star"></i>
-                            {spot.avgRating} {spot.numReviews} reviews
+                            {spot.avgRating} <div className="space">.</div> {spot.numReviews} reviews
                             </h2>
+                            </div>
                         ) : (spot.numReviews === 1) ? (
-                            <h2>
+                            <div>
+                            <h2 className="review-header3">
                             <i className="fa-solid fa-star"></i>
-                            {spot.avgRating} {spot.numReviews} review
+                            {spot.avgRating} <div className="space">.</div> {spot.numReviews} review
                             </h2>
+                            </div>
                         ) : (
                             <h2>
                             <i className="fa-solid fa-star"></i>
                             NEW
                             </h2>
                         )}
-                        </div> */}
+                        </div>
+                        </div>
                     <div>
                         {(sessionUser !== undefined && spot.Owner?.id !== sessionUser?.id && spot.numReviews > 1) ? (
                             <div>
-                                <h2>
+                                <h2 className="review-header2">
                                 <i className="fa-solid fa-star"></i>
-                                {spot.avgRating} <div>.</div> {spot.numReviews} reviews
+                                {spot.avgRating} <div className="space">.</div> {spot.numReviews} reviews
                                 </h2>
-                                {sessionUser && (
+                                {sessionUser !== undefined && (
+                                <div className="reviewList">
                                 <ReviewList />
+                                </div>
                                 )}
                             </div>
                         ): (sessionUser !== undefined && spot.Owner?.id !== sessionUser.id && spot.numReviews === 1) ? (
                             <div>
-                                    <h2>
+                                    <h2 className="review-header2">
                                     <i className="fa-solid fa-star"></i>
-                                    {spot.avgRating} <div>.</div> {spot.numReviews} review
+                                    {spot.avgRating} <div className="space">.</div> {spot.numReviews} review
                                     </h2>
+                                    <div className="reviewList">
                                     <ReviewList />
+                                    </div>
                             </div>
                         ): (sessionUser !== undefined && spot.Owner?.id !== sessionUser?.id && spot.numReviews <= 0) ? (
                             <div>
@@ -97,11 +107,13 @@ export default function SpotDetails () {
                             </div>
                         ) : (sessionUser !== undefined && spot.Owner?.id === sessionUser?.id && spot.numReviews > 1) ? (
                             <div>
-                                <h2>
+                                <h2 className="review-header2">
                                 <i className="fa-solid fa-star"></i>
-                                {spot.avgRating} <div>.</div> {spot.numReviews} reviews
+                                {spot.avgRating} <div className="space">.</div> {spot.numReviews} reviews
                                 </h2>
+                                <div className="reviewList">
                                 <ReviewList spotOwnerId={spot.Owner.id}/>
+                                </div>
                             </div>
                         ) : (sessionUser !== undefined && spot.Owner?.id === sessionUser?.id && spot.numReviews === 1) ? (
                             <div>
@@ -109,7 +121,9 @@ export default function SpotDetails () {
                                 <i className="fa-solid fa-star"></i>
                                 {spot.avgRating} <div className="space">.</div> {spot.numReviews} review
                                 </h2>
+                                <div className="reviewList">
                                 <ReviewList spotOwnerId={spot.Owner.id}/>
+                                </div>
                             </div>
                         ) : (sessionUser !== undefined && spot.Owner?.id === sessionUser?.id && spot.numReviews < 0) ? (
                             <div>
@@ -120,19 +134,23 @@ export default function SpotDetails () {
                             </div>
                         ) : (sessionUser === undefined && spot.numReviews > 1) ? (
                             <div>
-                                <h2>
+                                <h2 className="review-header2">
                                 <i className="fa-solid fa-star"></i>
-                                {spot.avgRating} <div>.</div> {spot.numReviews} reviews
+                                {spot.avgRating} <div className="space">.</div> {spot.numReviews} reviews
                                 </h2>
-                                <ReviewList />
+                                <div className="reviewList">
+                                    <ReviewList />
+                                </div>
                             </div>
                         ) : (sessionUser === undefined && spot.numReviews === 1) ? (
                             <div>
-                                <h2>
+                                <h2 className="review-header2">
                                 <i className="fa-solid fa-star"></i>
-                                {spot.avgRating} <div>.</div> {spot.numReviews} review
+                                {spot.avgRating} <div className="space">.</div> {spot.numReviews} review
                                 </h2>
-                                <ReviewList />
+                                <div className="reviewList">
+                                    <ReviewList />
+                                </div>
                             </div>
                         ) : (
                             <div>

@@ -13,7 +13,7 @@ const ReviewList = ({spotOwnerId}) => {
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
     const divRef = useRef();
-    const reviews = useSelector(state=>state.reviews);
+    const reviews = useSelector(state=>Object.values(state?.reviews)).reverse();
     const sessionUser = useSelector(state => state.session.user);
 
     useEffect(() => {
@@ -35,7 +35,7 @@ const ReviewList = ({spotOwnerId}) => {
     }, [dispatch, spotId]);
 
     const date = Object.values(reviews).map((review) => new Date(review.createdAt));
-    const dateArr = date.toString().split(' ');
+    const dateArr = date.toString().split(' ')
     const month = dateArr[1];
     const year = dateArr[3];
 

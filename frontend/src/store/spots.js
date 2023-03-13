@@ -56,7 +56,7 @@ export const fetchSpots = () => async (dispatch) => {
     const res = await csrfFetch('/api/spots');
     if (res.ok) {
         const spots = await res.json().then((data) => dispatch(getSpots(data)));
-        console.log(spots)
+        // console.log(spots)
         return spots
     };
 };
@@ -154,8 +154,8 @@ export default function spotReducer(state = initalState, action) {
             return newState;
         }
         case ADD_IMG:
-            console.log(state)
-            console.log(action)
+            // console.log(state)
+            // console.log(action)
             return {
                 ...state,
                 [action.image.id]: {
