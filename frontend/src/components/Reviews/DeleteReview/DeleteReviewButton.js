@@ -1,20 +1,16 @@
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
-import { deleteReviewFetch, getSpotReviews } from "../../../store/reviews";
+import { deleteReviewFetch } from "../../../store/reviews";
 
 import './DeleteReview.css'
 
 
-export default function DeleteReviewButton({id}) {
+export default function DeleteReviewButton({id, spotId}) {
     const dispatch = useDispatch();
-    // const history = useHistory();
-    const spotId = useParams()
     const { closeModal } = useModal();
 
     const handleClick = () => {
         dispatch(deleteReviewFetch(id,spotId)).then(closeModal())
-        dispatch(getSpotReviews(spotId))
     }
 
     return (
