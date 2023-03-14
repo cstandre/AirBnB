@@ -23,6 +23,7 @@ export default function SpotDetails () {
     }, [dispatch, spotId])
 
     // if (spot.avgRating === null) spot.avgRating = 0
+    // Object.values(spot.SpotImages).sort((a, b) => (a.id > b.id) ? 1 : -1)
 
     return (
         <>
@@ -32,8 +33,8 @@ export default function SpotDetails () {
                             <h1 className="spot-name">{spot.name}</h1>
                             <p>{spot.city}, {spot.state}, {spot.country}</p>
                             <div className="img-container">
-                                {spot.SpotImages && spot.SpotImages.map((image, i) =>
-                                <img key={image.id} className={`img${i}`} src={image.url} alt='' />)}
+                                {spot.SpotImages && Object.values(spot.SpotImages).sort((a, b) => (a.id > b.id) ? 1 : -1).map((image, i) =>
+                                <img key={image.id} className={`img${i}`} src={image.url} alt='' />).reverse()}
                             </div>
                         <div className="mid">
                         <div>

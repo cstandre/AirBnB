@@ -57,7 +57,7 @@ export default function CreateSpotFrom() {
         }
 
         const handelImages = [prevImage, addImage1, addImage2, addImage3, addImage4]
-
+  
         const newSpot = {
             owner: sessionUser,
             address,
