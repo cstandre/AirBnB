@@ -90,7 +90,7 @@ export const createSpot = (details) => async (dispatch) => {
             const image = await imgFetch.json()
             imgArr.push(image)
         }
-        console.log(imgArr)
+        // console.log(imgArr)
         dispatch(addImage(imgArr));
         dispatch(addSpot(spot));
         return spot;
@@ -144,8 +144,8 @@ export default function spotReducer(state = initalState, action) {
             return newState;
         }
         case GET_ONE:{
-            console.log(state, "state")
-            console.log(action, "action")
+            // console.log(state, "state")
+            // console.log(action, "action")
             return {
                 ...state,
                 currentSpot: action.spot
