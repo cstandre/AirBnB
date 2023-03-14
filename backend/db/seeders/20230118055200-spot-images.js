@@ -10,10 +10,10 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     options.tableName = 'SpotImages';
     await queryInterface.bulkInsert(options, [
-      {
-        url: 'https://res.cloudinary.com/djclmc80y/image/upload/v1677730584/Screen-Shot-2018-01-13-at-6.46.47-PM_ay0m7x.jpg',
-        preview: true,
-        spotId: 1
+    {
+      url: 'https://res.cloudinary.com/djclmc80y/image/upload/v1677730584/Screen-Shot-2018-01-13-at-6.46.47-PM_ay0m7x.jpg',
+      preview: true,
+      spotId: 1
     },
     {
       url: 'https://res.cloudinary.com/djclmc80y/image/upload/v1678591498/oculus_img_3_dp9gmh.jpg',
