@@ -45,12 +45,12 @@
     padding: 5px;
 }
 
-.delete-button-userPage {
-    justify-content: center;
-    background: #FF5A5F;
-    color: #FFFFFF;
-    border: 1px solid black;
-    padding: 5px;
+.update-button:hover {
+    cursor: pointer;
+}
+
+.delete-button-currentSpot:hover {
+    cursor:pointer;
 }
 
 .userSpot-header {
@@ -64,4 +64,8 @@
     color: #FFFFFF;
     border: 1px solid black;
     padding: 5px;
+}
+
+.newSpot-button:hover {
+    cursor: pointer;
 }
