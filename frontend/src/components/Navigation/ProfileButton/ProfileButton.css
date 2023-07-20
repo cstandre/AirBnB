@@ -8,14 +8,17 @@
 
 .showing {
     display: grid;
-    grid-template-rows: 1fr, 1fr, 1fr, 2fr, 1fr;
-    position: relative;
+    margin-top: 15px;
+    width: 170px;
+    justify-content: center;
     background-color: #FFFFFF;
-    list-style: none;
-    width: 200px;
+    border-radius: 10px;
+    border: 1px solid black;
 }
 
 .log-out {
+    margin-top: 10px;
+    margin-bottom: 8px;
     display: grid;
     background: #FF5A5F;
     color: #FFFFFF;
@@ -28,9 +31,9 @@
     cursor: pointer;
 }
 
+.user-menu,
 .manage-spots {
-    background-color: #FFFFFF;
-    border: 0px;
+    margin: 1px;
 }
 
 .manage-spots:hover {

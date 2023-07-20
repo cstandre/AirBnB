@@ -57,15 +57,27 @@ function ProfileButton({ user }) {
       <button onClick={openMenu}>
       <i className="fa-solid fa-bars" />
       </button>
-      <ul className={ulClassName} ref={ulRef}>
+      <div className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>Hello, {user.firstName}</li>
-            <li>{user.username}</li>
-            <li>{user.email}</li>
-              <button className="log-out" onClick={logout}>Log Out</button>
-            <button className="manage-spots" onClick={handelClick}>
+            <div>
+              <p className="user-menu">
+                Hello, {user.firstName}
+              </p>
+            </div>
+            <div>
+              <p className="user-menu">
+                {user.username}
+              </p>
+            </div>
+            <p className="user-menu">
+              {user.email}
+            </p>
+            <p className="manage-spots" onClick={handelClick}>
               Manage Spots
+            </p>
+            <button className="log-out" onClick={logout}>
+              Log Out
             </button>
           </>
         ) : (
@@ -84,7 +96,7 @@ function ProfileButton({ user }) {
             />
           </>
         )}
-      </ul>
+      </div>
     </>
   );
 }

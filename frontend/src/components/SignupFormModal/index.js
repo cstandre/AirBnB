@@ -42,17 +42,20 @@ function SignupFormModal() {
 
     return (
         <>
-            <h1 className='signUp'>Sign Up</h1>
             <form className='signUp-form' onSubmit={onSubmit}>
-                <ul className='errors'>
-                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-                </ul>
+            <div className='top-divider'>
+                <div className='signup-header'>Sign Up</div>
+            </div>
+            <h1 className='signup-subheader'>Welcome to Vacation Spots</h1>
+                <div className='errors'>
+                    {errors.map((error, idx) => <div key={idx}>{error}</div>)}
+                </div>
                     <input
                         type='text'
                         onChange={e => setUsername(e.target.value)}
                         value={username}
                         placeholder="UserName"
-                        className="UserName"
+                        className="first-input"
                         required
                     />
                     <input
@@ -60,7 +63,7 @@ function SignupFormModal() {
                         onChange={e => setFirstName(e.target.value)}
                         value={firstName}
                         placeholder="First Name"
-                        clasName="First Name"
+                        className="mid-input"
                         required
                     />
                     <input
@@ -68,7 +71,7 @@ function SignupFormModal() {
                         onChange={e => setLastName(e.target.value)}
                         value={lastName}
                         placeholder='Last Name'
-                        className='Last Name'
+                        className="mid-input"
                         required
                     />
                     <input
@@ -76,7 +79,7 @@ function SignupFormModal() {
                         onChange={e => setEmail(e.target.value)}
                         value={email}
                         placeholder='Email'
-                        className='Email'
+                        className="mid-input"
                         required
                     />
                     <input
@@ -84,7 +87,7 @@ function SignupFormModal() {
                         onChange={e => setPassword(e.target.value)}
                         value={password}
                         placeholder="Password"
-                        className="Password"
+                        className="mid-input"
                         required
                     />
                     <input
@@ -92,7 +95,7 @@ function SignupFormModal() {
                         onChange={e => setConfirmPassword(e.target.value)}
                         value={confirmPassword}
                         placeholder='Confirm Password'
-                        className='Confirm Password'
+                        className='last-input'
                         required
                     />
                 <button className='submit' disabled={isDisabled} type='submit'>Sign Up!</button>

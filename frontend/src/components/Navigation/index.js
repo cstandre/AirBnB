@@ -1,31 +1,42 @@
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton/ProfileButton';
-import logo from '../../assets/logo.png'
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
+  const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
 
+  const homeClick = (e) => {
+    e.preventDefault();
+    history.push('/');
+  };
+
+  const newSpot = (e) => {
+    e.preventDefault();
+    history.push('/spots/new');
+  };
+
   return (
-    <ul className='navigation'>
-      <li>
-        <NavLink exact to="/"><img className='logo' src={logo} alt="" /></NavLink>
-      </li>
-      <li>
+    <div>
+      <div className='navigation'>
+        <div className='logo-container' onClick={homeClick}>
+          <img className='logo-img' src='https://res.cloudinary.com/djclmc80y/image/upload/v1687316945/airbnb_logo_skrvy1.png' alt="" />
+          <span className='logo-name'>Vacation Spots</span>
+        </div>
         {sessionUser && (
-          <div className='spot-box'>
-            <Link className='createSpot-button' to="/spots/new">Create a New Spot</Link>
+          <div className='spot-box' onClick={newSpot}>
+            <p>Rent your home</p>
           </div>
         )}
-      </li>
-      {isLoaded && (
-        <li className='menu-box'>
-          <ProfileButton className='menu' user={sessionUser} />
-        </li>
-      )}
-    </ul>
+        {isLoaded && (
+          <div className='menu-box'>
+            <ProfileButton className='menu' user={sessionUser} />
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 

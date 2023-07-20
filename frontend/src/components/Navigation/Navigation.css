@@ -1,29 +1,48 @@
 .navigation {
-    display: grid;
-    grid-template-columns: 5fr 2fr 1fr;
-    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 30px;
+    padding-left: 20px;
+    height: 60px;
+    margin: 0px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-bottom: 1px solid gray;
 }
 
-.logo {
+.logo-container { grid-area: logo-container; }
+.spot-box { grid-area: spot-box; }
+.menu-box { grid-area: menu-box; }
+
+.logo-container {
+    margin: 10px;
+}
+
+.logo-container:hover {
+    cursor: pointer;
+}
+
+.logo-img {
     height: 50px;
-    list-style-type: none;
 };
 
-.menu {
-    display: grid;
-    justify-content: start;
+.logo-name {
+    color: #FF5A5F;
 }
 
 .menu-box {
-    display: grid;
-    justify-content: start;
     height: 30px;
+    z-index: 1000;
 }
 
 .spot-box {
     display: grid;
     text-decoration: none;
     justify-items: end;
+}
+
+.spot-box:hover {
+    cursor: pointer;
 }
 
 .createSpot-button-main {

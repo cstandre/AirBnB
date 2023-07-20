@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as sessionActions from '../../store/session';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../context/Modal';
 
 
@@ -9,6 +9,7 @@ import './LoginForm.css';
 
 function LoginFormModal() {
   const dispatch = useDispatch();
+  const sessionUser = useSelector(state=>state.session.user);
   const [credential, setCredential] = useState('');
   const [password, setPassword] = useState('');
   const [isButtonDisabled, setIsButtonDisabled]= useState(true);
@@ -44,34 +45,37 @@ function LoginFormModal() {
   const createDemo = () => {
     setCredential('DemoUser');
     setPassword('DemoUser123');
-    return dispatch(sessionActions.login(credential, password)).then(closeModal)
+    // return dispatch(sessionActions.login(credential, password)).then(closeModal)
   }
 
   return (
     <>
-      <h1 className='logIn'>Log In</h1>
       <form className="logIn-form" onSubmit={handleSubmit}>
-        <ul className='errors'>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-        </ul>
+          <div className='top-divider'>
+            <div className='login-header'>Log in</div>
+          </div>
+          <h1 className='login-subheader'>Welcome to Vacation Spots</h1>
+          <div className='login-errors'>
+            {errors.map((error, idx) => <div key={idx}>{error}</div>)}
+          </div>
+                <input
+                  type="text"
+                  value={credential}
+                  onChange={(e) => setCredential(e.target.value)}
+                  placeholder='Username or Email'
+                  required
+                  className='first-input'
+                />
               <input
-                type="text"
-                value={credential}
-                onChange={(e) => setCredential(e.target.value)}
-                placeholder='Username or Email'
+                type="password"
+                value={password}
+                placeholder='Password'
+                onChange={(e) => setPassword(e.target.value)}
                 required
-                className='userName'
+                className='last-input'
               />
-            <input
-              type="password"
-              value={password}
-              placeholder='Password'
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className='password'
-            />
-        <button className='submit' disabled={isButtonDisabled} type="submit">Log In</button>
-        <button className='demoUser' onClick={createDemo}>Demo User</button>
+          <button className='submit' disabled={isButtonDisabled} type="submit">Log In</button>
+          <button className='demoUser' onClick={createDemo}>Demo User</button>
       </form>
     </>
   );
