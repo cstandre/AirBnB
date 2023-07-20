@@ -57,7 +57,7 @@ export default function CreateSpotFrom() {
         }
 
         const handelImages = [prevImage, addImage1, addImage2, addImage3, addImage4]
-  
+
         const newSpot = {
             owner: sessionUser,
             address,
@@ -90,7 +90,7 @@ export default function CreateSpotFrom() {
     return (
         <>
             <div className="page-wrapper">
-                <h1 className="newSpot-header">Create a New Spot!</h1>
+                <h1 className="new-spot-header">Create a New Spot!</h1>
                 <div className="category-header">
                 <h2 className="newSpot-subHeader">Where is your place located?</h2>
                 <p className="description">Guest will only get your address once they book a reservation.</p>

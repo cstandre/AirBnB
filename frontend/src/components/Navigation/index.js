@@ -25,16 +25,16 @@ function Navigation({ isLoaded }){
           <img className='logo-img' src='https://res.cloudinary.com/djclmc80y/image/upload/v1687316945/airbnb_logo_skrvy1.png' alt="" />
           <span className='logo-name'>Vacation Spots</span>
         </div>
-        {sessionUser && (
-          <div className='spot-box' onClick={newSpot}>
-            <p>Rent your home</p>
+        <div className='right-side-container'>
+          <div className='rent-spot-container' onClick={newSpot}>
+            <div>Rent your home</div>
           </div>
-        )}
-        {isLoaded && (
-          <div className='menu-box'>
+          {isLoaded && (
+          <div className='user-menu'>
             <ProfileButton className='menu' user={sessionUser} />
           </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

@@ -12,7 +12,7 @@
     width: 500px;
 }
 
-.newSpot-header {
+.new-spot-header {
     height: 30px;
     width: 500px;
     margin: 0px;
@@ -48,4 +48,15 @@
 
 .last-input {
     width: 492px;
+}
+
+.createSpot-button-main {
+    display: grid;
+    justify-self: end;
+    text-align: center;
+    padding: 2px;
+    width: 130px;
+    background: #FF5A5F;
+    color: #FFFFFF;
+    border: 1px solid black;
 }

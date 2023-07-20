@@ -6,15 +6,14 @@
     padding-left: 20px;
     height: 60px;
     margin: 0px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid #ebebeb;
 }
 
-.logo-container { grid-area: logo-container; }
-.spot-box { grid-area: spot-box; }
-.menu-box { grid-area: menu-box; }
-
 .logo-container {
+    display: flex;
+    flex: 0 0 auto;
+    color: #FF5A5F;
+    align-items: center;
     margin: 10px;
 }
 
@@ -23,35 +22,32 @@
 }
 
 .logo-img {
-    height: 50px;
+    height: 30px;
 };
 
 .logo-name {
-    color: #FF5A5F;
+    font-weight: 500;
 }
 
-.menu-box {
-    height: 30px;
+.right-side-container {
+    display: flex;
+    align-items: center;
+    height: 60px;
+}
+
+.user-menu {
+    display: flex;
+    flex: 0 0 auto;
     z-index: 1000;
 }
 
-.spot-box {
-    display: grid;
-    text-decoration: none;
-    justify-items: end;
+.rent-spot-container {
+    display: flex;
+    flex: 0 0 auto;
+    justify-items: start;
+    margin-right: 30px;
 }
 
-.spot-box:hover {
+.rent-spot-container:hover {
     cursor: pointer;
-}
-
-.createSpot-button-main {
-    display: grid;
-    justify-self: end;
-    text-align: center;
-    padding: 2px;
-    width: 130px;
-    background: #FF5A5F;
-    color: #FFFFFF;
-    border: 1px solid black;
 }

@@ -54,24 +54,25 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
+      <button className="menu-container" onClick={openMenu}>
       <i className="fa-solid fa-bars" />
+      <img className="profile-pic" alt="" src="https://res.cloudinary.com/djclmc80y/image/upload/v1689894597/airbnb-profile-pic_tq6bof.png"></img>
       </button>
       <div className={ulClassName} ref={ulRef}>
         {user ? (
           <>
             <div>
               <p className="user-menu">
-                Hello, {user.firstName}
+                Hello, {user?.firstName}
               </p>
             </div>
             <div>
               <p className="user-menu">
-                {user.username}
+                {user?.username}
               </p>
             </div>
             <p className="user-menu">
-              {user.email}
+              {user?.email}
             </p>
             <p className="manage-spots" onClick={handelClick}>
               Manage Spots
@@ -83,16 +84,16 @@ function ProfileButton({ user }) {
         ) : (
           <>
             <OpenModalMenuItem
+              className="sign-up-btn"
+              itemText="Sign Up"
+              onItemClick={closeMenu}
+              modalComponent={<SignupFormModal />}
+            />
+            <OpenModalMenuItem
               className="log-in"
               itemText="Log In"
               onItemClick={closeMenu}
               modalComponent={<LoginFormModal />}
-            />
-            <OpenModalMenuItem
-              className="sign-up"
-              itemText="Sign Up"
-              onItemClick={closeMenu}
-              modalComponent={<SignupFormModal />}
             />
           </>
         )}

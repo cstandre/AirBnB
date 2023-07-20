@@ -2,19 +2,44 @@
     display: none;
 }
 
-.fa-solid:hover {
+.menu-container {
+    display: flex;
+    align-items: center;
+    background-color: #FFFFFF;
+    border: 1px solid #dddddd;
+    border-radius: 20px;
+    height: 40px;
+    width: 70px;
+}
+
+.menu-container:hover {
     cursor: pointer;
+    box-shadow: 0 2px 5px rgba(15,17,17,.15);
+}
+
+.fa-bars {
+    margin: 5px;
+    font-size: 14px;
+}
+
+.profile-pic {
+    height: 30px;
+    margin: 5px;
 }
 
 .showing {
     display: grid;
-    margin-top: 15px;
+    position: absolute;
+    top: 50px;
+    right: 30px;
     width: 170px;
-    justify-content: center;
+    justify-content: start;
     background-color: #FFFFFF;
     border-radius: 10px;
-    border: 1px solid black;
+    border: 1px solid #dddddd;
+    box-shadow: 0 2px 5px rgba(15,17,17,.15);
 }
+
 
 .log-out {
     margin-top: 10px;

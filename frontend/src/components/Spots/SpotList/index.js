@@ -1,40 +1,48 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { fetchSpots } from "../../../store/spots";
 
 import './SpotsList.css'
 
 const SpotList = () => {
     const dispatch = useDispatch();
-    const spots = useSelector(state=>state.spots);
-
+    const history = useHistory();
+    const spots = useSelector(state=>state?.spots);
 
     useEffect(() => {
         dispatch(fetchSpots());
     }, [dispatch]);
 
+    const spotPage = (id) => {
+        history.push(`/spots/${id}`)
+    }
+
     return (
-        <>
-            <ul className="spotsList">
-                {Object.values(spots).map(({id, city, state, previewImage, avgRating, price}) => (
-                    <li key={id} className="spot">
-                        <NavLink key={id} to={`/spots/${id}`} className='spot'>
-                            <img className="preview" src={previewImage} alt="" />
-                            <p className="detail-container">
-                            <div>{city}, {state}</div>
-                            <div className="rating-container">
-                                <i className="fa-solid fa-star"></i>{avgRating || 'New'}
-                            </div>
-                            <div>
-                                ${price} night
-                            </div>
-                            </p>
-                        </NavLink>
-                    </li>
-                ))}
-            </ul>
-        </>
+        <div className="spots-wrapper">
+            <div className="spots-list">
+            {Object?.values(spots)?.map((spot) => (
+                <div key={spot?.id} className="spot-container">
+                    <img className="preview-img" src={spot?.previewImage} alt="" onClick={() => spotPage(spot?.id)} />
+                    <div className="spot-detail-container">
+                    <div className="spot-location" onClick={() => spotPage(spot?.id)}>{spot?.city}, {spot?.state}</div>
+                    <div className="spot-rating-container">
+                        <i className="fa-solid fa-star"></i>
+                        <span className="spot-rating">{spot?.avgRating || 'New'}</span>
+                    </div>
+                    <div className="spot-price-container">
+                        <span className="spot-price">
+                            ${spot?.price}
+                        </span>
+                        <span>
+                            night
+                        </span>
+                    </div>
+                    </div>
+                </div>
+            ))}
+            </div>
+        </div>
     )
 };
 

@@ -12,6 +12,9 @@ export default function OpenModalButton ({ modalComponent, buttonText, onButtonC
         setModalContent(modalComponent);
     }
 
+    // if (buttonText === 'Sign Up') {
+    //     return (<button className="sign-up-btn" onClick={onClick}>{buttonText}</button>)
+    // }
     return (
         <button className="modal-button" onClick={onClick}>{buttonText}</button>
     );
