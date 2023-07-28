@@ -37,6 +37,7 @@
 
 .user-menu {
     display: flex;
+    margin-left: 5px;
     flex: 0 0 auto;
     z-index: 1000;
 }
@@ -50,4 +51,16 @@
 
 .rent-spot-container:hover {
     cursor: pointer;
+}
+
+.log-out-btn {
+    display: flex;
+    justify-content: center;
+}
+
+.logged-in-user {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 5px;
 }

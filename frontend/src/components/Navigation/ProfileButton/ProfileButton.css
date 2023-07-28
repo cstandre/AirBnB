@@ -28,9 +28,10 @@
 }
 
 .showing {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     position: absolute;
-    top: 50px;
+    top: 55px;
     right: 30px;
     width: 170px;
     justify-content: start;
@@ -42,9 +43,10 @@
 
 
 .log-out {
+    display: grid;
     margin-top: 10px;
     margin-bottom: 8px;
-    display: grid;
+    width: 90%;
     background: #FF5A5F;
     color: #FFFFFF;
     border: 1px solid black;
@@ -59,6 +61,10 @@
 .user-menu,
 .manage-spots {
     margin: 1px;
+}
+
+.manage-spots {
+    margin-left: 5px;
 }
 
 .manage-spots:hover {
