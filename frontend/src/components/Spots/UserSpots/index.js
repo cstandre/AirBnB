@@ -52,26 +52,28 @@ const UserSpots = () => {
     return (
         <div className="user-spot-container">
             <h1 className="userSpot-header">Manage your Spots</h1>
-            <button className='newSpot-button' onClick={() => history.push(`/spots/new`)}>Create a New Spot</button>
+            <button className='user-newSpot-button' onClick={() => history.push(`/spots/new`)}>Create a New Spot</button>
             {hasSpots ? (
                 <div className="user-spot-container-deets">
                     {Object.values(spots).map(({id, city, state, previewImage, avgRating, price}) => (
-                        <div key={id} className="spot">
-                            <div onClick={(e) => spotClick(e, id)} className='spot'>
+                        <div key={id} className="spot-container">
+                            <div onClick={(e) => spotClick(e, id)} className='spot-deets'>
                                 <img className="preview" src={previewImage} alt="" />
                                 <div className="detail-container">
-                                <div className="city-state">
-                                {city}, {state}
+                                <div className="location-rating">
+                                    <span className="city-state">
+                                    {city}, {state}
+                                    </span>
+                                    <span className="rating-container">
+                                    <i className="fa-solid fa-star"></i>{avgRating || 'New'}
+                                    </span>
                                 </div>
-                                <div className="rating-container">
-                                <i className="fa-solid fa-star"></i>{avgRating || 'New'}
-                                </div>
-                                <div>
+                                <div className="user-spot-price">
                                 ${price} night
                                 </div>
                                 </div>
                             </div>
-                            <div className="buttons">
+                            <div className="user-spot-buttons">
                             <button className="update-button" onClick={() => history.push(`/spots/${id}/edit`)}>Update</button>
                             <div className="delete-button-currentSpot">
                             <OpenModalButton
