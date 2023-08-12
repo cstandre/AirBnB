@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { getCurrentSpots } from "../../../store/spots";
 import OpenModalButton from "../../OpenModalButton";
 import DeleteSpotButton from "../DeleteSpotsModal/index";
@@ -42,20 +42,25 @@ const UserSpots = () => {
     let hasSpots = false;
     if (Object.keys(spots).length > 0) {
         hasSpots = true
-    }
+    };
+
+    const spotClick = (e, id) => {
+        e.preventDefault();
+        history.push(`/spots/${id}`);
+    };
 
     return (
-        <>
-        <h1 className="userSpot-header">Manage your Spots</h1>
-        <button className='newSpot-button' onClick={() => history.push(`/spots/new`)}>Create a New Spot</button>
+        <div className="user-spot-container">
+            <h1 className="userSpot-header">Manage your Spots</h1>
+            <button className='newSpot-button' onClick={() => history.push(`/spots/new`)}>Create a New Spot</button>
             {hasSpots ? (
-                <ul className="userList">
+                <div className="user-spot-container-deets">
                     {Object.values(spots).map(({id, city, state, previewImage, avgRating, price}) => (
-                        <li key={id} className="spot">
-                            <NavLink to={`/spots/${id}`} className='spot'>
+                        <div key={id} className="spot">
+                            <div onClick={(e) => spotClick(e, id)} className='spot'>
                                 <img className="preview" src={previewImage} alt="" />
-                                <p className="detail-container">
-                                <div>
+                                <div className="detail-container">
+                                <div className="city-state">
                                 {city}, {state}
                                 </div>
                                 <div className="rating-container">
@@ -64,8 +69,8 @@ const UserSpots = () => {
                                 <div>
                                 ${price} night
                                 </div>
-                                </p>
-                            </NavLink>
+                                </div>
+                            </div>
                             <div className="buttons">
                             <button className="update-button" onClick={() => history.push(`/spots/${id}/edit`)}>Update</button>
                             <div className="delete-button-currentSpot">
@@ -76,16 +81,16 @@ const UserSpots = () => {
                             />
                             </div>
                             </div>
-                        </li>
+                        </div>
                         ))}
-                    </ul>
+                    </div>
             ): (
                 <div>
                     <h2>You don't have any spots to manage</h2>
                 </div>
 
             )}
-        </>
+        </div>
     )
 };
 

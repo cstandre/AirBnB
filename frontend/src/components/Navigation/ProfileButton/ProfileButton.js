@@ -62,18 +62,22 @@ function ProfileButton({ user }) {
         {user ? (
           <>
             <div className="logged-in-user">
-              <p className="user-menu">
-                Hello, {user?.firstName}
-              </p>
-              <p className="user-menu">
-                {user?.username}
-              </p>
-              <p className="user-menu">
-                {user?.email}
-              </p>
-              <p className="manage-spots" onClick={handelClick}>
-                Manage Spots
-              </p>
+              <div className="user-info">
+                <p className="user-menu">
+                  Hello, {user?.firstName}
+                </p>
+                <p className="user-menu">
+                  {user?.username}
+                </p>
+                <p className="user-menu">
+                  {user?.email}
+                </p>
+              </div>
+              <div className="manage-spots" onClick={handelClick}>
+                <p className="spots-txt">
+                  Manage Spots
+                </p>
+              </div >
               <div className="log-out-btn">
                 <button className="log-out" onClick={logout}>
                   Log Out

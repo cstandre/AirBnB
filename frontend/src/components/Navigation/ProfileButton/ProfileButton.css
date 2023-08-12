@@ -64,7 +64,15 @@
 }
 
 .manage-spots {
-    margin-left: 5px;
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    marin-left: 5px;
+    border-top: 1px solid black;
+}
+
+.spots-txt {
+    margin: 0px;
 }
 
 .manage-spots:hover {
