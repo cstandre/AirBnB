@@ -1,8 +1,29 @@
-.spot-name {
-    font-size: 24;
-    font-weight: bold;
+.spot-detail-body {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
 }
 
+.page-header {
+    margin-left: 35px;
+}
+
+.quick-desc-txt {
+    justify-content: center;
+}
+
+.avg-rate {
+    margin-left: 3px;
+}
+
+.quick-desc-txt::after {
+    content: ' · ';
+}
+
+.spot-name {
+    font-size: 24px;
+    font-weight: bold;
+}
 
 .rating {
     text-decoration: none;
@@ -10,43 +31,52 @@
 
 .img-container {
     display: grid;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    margin-left: 20px;
-    margin-right: 10px;
-    justify-items: center;
-    width: 1200px;
+    box-sizing: border-box;
     grid-template-areas: "img0 img1 img2"
-    "img0 img3 img4";
+                         "img0 img3 img4";
+    width: 900px;
+    gap: 10px;
+    margin-left: 30px;
+    margin-bottom: 30px;
 }
+
 .img0 {
     grid-area: img0;
-    height: 400px;
-    width: 500px;
+    height: 414.19px;
+    width: 560px;
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 
 .img1 {
     grid-area: img1;
-    height: 200px;
-    width: 300px;
+    height: 207.09px;
+    width: 272px;
+    object-fit: cover;
 }
 
 .img2 {
     grid-area: img2;
-    height: 200px;
-    width: 300px;
+    height: 207.09px;
+    width: 272px;
+    object-fit: cover;
+    border-top-right-radius: 10px;
 }
 
 .img3 {
     grid-area: img3;
-    height: 200px;
-    width: 300px;
+    height: 199.07px;
+    width: 272px;
+    object-fit: cover;
 }
 
 .img4 {
     grid-area: img4;
-    height: 200px;
-    width: 300px;
+    height: 199.07px;
+    width: 272px;
+    object-fit: cover;
+    border-bottom-right-radius: 10px;
 }
 
 .new-review {
@@ -72,9 +102,32 @@
     font-weight: normal;
 }
 
-.box {
+.reservation-box {
+    display: flex;
+    justify-content: center;
     grid-area: box;
-    border: 1px solid black;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(15,17,17,.15);
+    margin-right: 35px;
+}
+
+.res-box-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 85%;
+}
+
+.res-box-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bold-price {
+    font-weight: 700;
+    margin-right: 2px;
 }
 
 .review-header2 {
@@ -110,4 +163,3 @@
  .reviewList {
     padding-left: 40px;
  }
-
