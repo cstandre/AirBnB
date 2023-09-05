@@ -59,8 +59,6 @@ export default function SpotDetails () {
                                 Entire vacation home hosted by {spot?.Owner?.firstName} {spot?.Owner?.lastName}
                                 </h2>
                             )}
-                        </div>
-                        <div>
                             <p className="spot-description">
                                 {spot?.description}
                             </p>
