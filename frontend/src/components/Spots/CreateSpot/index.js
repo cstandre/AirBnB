@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createSpot } from "../../../store/spots";
+// import LoginFormModal from "../../LoginFormModal";
 // import { spotDetails } from "../../../store/spots";
 
 import './CreateSpot.css'
@@ -77,6 +78,9 @@ export default function CreateSpotFrom() {
             if (res.status === 400) {
                 const errorMsg = "Spot description must be at least 30 charactors";
                 setErrors([errorMsg])
+            };
+            if (res.status === 401) {
+                alert('Please login to create a spot')
             }
         })
         if (spot) {
