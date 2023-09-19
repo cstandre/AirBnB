@@ -84,17 +84,31 @@
     font-weight: bold;
 }
 
-.mid {
+/* .bottom-portion {
     display: grid;
-    padding-left: 40px;
-    width: 1150px;
-    grid-template-areas: "host box"
-    "discr box";
+    justify-self: center;
+    grid-template-areas: "host    reservation"
+                         "reviews reservation";
+    border: 1px solid black;
+} */
+
+.bottom-portion {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
 }
 
-.host {
+/* .host-info {
     grid-area: host;
 }
+
+.reservation-box {
+    grid-area: reservation;
+}
+
+.reviews-container {
+    grid-area: reviews; */
+/* } */
 
 .spot-description {
     grid-area: discr;

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { spotDetails } from "../../../store/spots";
 import { useEffect } from "react";
 import ReviewList from "../../Reviews/ReviewList";
+import Reservation from "./reservation";
 import OpenModalButton from "../../OpenModalButton";
 import CreateReviewModal from "../../Reviews/CreateReviewModal/CreateReviewModal";
 import { useModal } from "../../../context/Modal";
@@ -52,8 +53,8 @@ export default function SpotDetails () {
                         {spot?.SpotImages && Object.values(spot?.SpotImages).sort((a, b) => (a.id > b.id) ? 1 : -1).map((image, i) =>
                         <img key={image?.id} className={`img${i}`} src={image?.url} alt='' />)}
                     </div>
-                    <div className="mid">
-                        <div>
+                    <div className="bottom-portion">
+                        <div className="host-info">
                             {spot.Owner && (
                                 <h2 className="host">
                                 Entire vacation home hosted by {spot?.Owner?.firstName} {spot?.Owner?.lastName}
@@ -81,8 +82,7 @@ export default function SpotDetails () {
                                     </span>
                                 </div>
                                 <div className="res-calendar">
-                                    <span>check in</span> {/* This will be a calendar */}
-                                    <span>check out</span> {/* This will be a calendar */}
+                                    <Reservation /> {/* This will be a calendar */}
                                     <p>guests</p> {/* This will be a drop down */}
                                     <button>Reserve</button>
                                     <p>You wont be charged yet</p>
@@ -107,98 +107,98 @@ export default function SpotDetails () {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                    {(sessionUser !== undefined && spot?.Owner?.id !== sessionUser?.id && spot?.numReviews > 1) ? (
-                        <div>
-                            <h2 className="review-header2">
-                                <i className="fa-solid fa-star"></i>
-                                {spot?.avgRating} {spot?.numReviews} reviews
-                            </h2>
-                            {sessionUser !== undefined && (
-                            <div className="reviewList">
-                                <ReviewList />
+                        <div className="reviews-container">
+                        {(sessionUser !== undefined && spot?.Owner?.id !== sessionUser?.id && spot?.numReviews > 1) ? (
+                            <div>
+                                <h2 className="review-header2">
+                                    <i className="fa-solid fa-star"></i>
+                                    {spot?.avgRating} {spot?.numReviews} reviews
+                                </h2>
+                                {sessionUser !== undefined && (
+                                <div className="reviewList">
+                                    <ReviewList />
+                                </div>
+                                )}
                             </div>
-                            )}
-                        </div>
-                    ): (sessionUser !== undefined && spot?.Owner?.id !== sessionUser?.id && spot?.numReviews === 1) ? (
-                        <div>
-                            <h2 className="review-header2">
-                                <i className="fa-solid fa-star"></i>
-                                {spot?.avgRating} {spot?.numReviews} review
-                            </h2>
-                            <div className="reviewList">
-                                <ReviewList />
+                        ): (sessionUser !== undefined && spot?.Owner?.id !== sessionUser?.id && spot?.numReviews === 1) ? (
+                            <div>
+                                <h2 className="review-header2">
+                                    <i className="fa-solid fa-star"></i>
+                                    {spot?.avgRating} {spot?.numReviews} review
+                                </h2>
+                                <div className="reviewList">
+                                    <ReviewList />
+                                </div>
                             </div>
-                        </div>
-                    ): (sessionUser !== undefined && spot?.Owner?.id !== sessionUser?.id && spot?.numReviews <= 0) ? (
-                        <div>
-                            <h2>
-                                <i className="fa-solid fa-star"></i>
+                        ): (sessionUser !== undefined && spot?.Owner?.id !== sessionUser?.id && spot?.numReviews <= 0) ? (
+                            <div>
+                                <h2>
+                                    <i className="fa-solid fa-star"></i>
+                                        NEW
+                                    </h2>
+                                    <h1 className="new-review">Be the first to post a review!</h1>
+                                <OpenModalButton
+                                    buttonText="Post Your Review"
+                                    onButtonClick={closeModal}
+                                    modalComponent={<CreateReviewModal userId={sessionUser?.id} spotId={spotId}/>}
+                                />
+                            </div>
+                        ) : (sessionUser !== undefined && spot?.Owner?.id === sessionUser?.id && spot?.numReviews > 1) ? (
+                            <div>
+                                <h2 className="review-header2">
+                                    <i className="fa-solid fa-star"></i>
+                                    {spot.avgRating} {spot?.numReviews} reviews
+                                </h2>
+                                <div className="reviewList">
+                                    <ReviewList spotOwnerId={spot?.Owner?.id}/>
+                                </div>
+                            </div>
+                        ) : (sessionUser !== undefined && spot?.Owner?.id === sessionUser?.id && spot?.numReviews === 1) ? (
+                            <div>
+                                <h2 className="review-header2">
+                                    <i className="fa-solid fa-star"></i>
+                                    {spot?.avgRating} {spot?.numReviews} review
+                                </h2>
+                                <div className="reviewList">
+                                    <ReviewList spotOwnerId={spot?.Owner?.id}/>
+                                </div>
+                            </div>
+                        ) : (sessionUser !== undefined && spot?.Owner?.id === sessionUser?.id && spot?.numReviews < 0) ? (
+                            <div>
+                                <h2>
+                                    <i className="fa-solid fa-star"></i>
                                     NEW
                                 </h2>
-                                <h1 className="new-review">Be the first to post a review!</h1>
-                            <OpenModalButton
-                                buttonText="Post Your Review"
-                                onButtonClick={closeModal}
-                                modalComponent={<CreateReviewModal userId={sessionUser?.id} spotId={spotId}/>}
-                            />
-                        </div>
-                    ) : (sessionUser !== undefined && spot?.Owner?.id === sessionUser?.id && spot?.numReviews > 1) ? (
-                        <div>
-                            <h2 className="review-header2">
-                                <i className="fa-solid fa-star"></i>
-                                {spot.avgRating} {spot?.numReviews} reviews
-                            </h2>
-                            <div className="reviewList">
-                                <ReviewList spotOwnerId={spot?.Owner?.id}/>
                             </div>
-                        </div>
-                    ) : (sessionUser !== undefined && spot?.Owner?.id === sessionUser?.id && spot?.numReviews === 1) ? (
-                        <div>
-                            <h2 className="review-header2">
-                                <i className="fa-solid fa-star"></i>
-                                {spot?.avgRating} {spot?.numReviews} review
-                            </h2>
-                            <div className="reviewList">
-                                <ReviewList spotOwnerId={spot?.Owner?.id}/>
+                        ) : (sessionUser === undefined && spot?.numReviews > 1) ? (
+                            <div>
+                                <h2 className="review-header2">
+                                    <i className="fa-solid fa-star"></i>
+                                    {spot?.avgRating} {spot?.numReviews} reviews
+                                </h2>
+                                <div className="reviewList">
+                                    <ReviewList />
+                                </div>
                             </div>
-                        </div>
-                    ) : (sessionUser !== undefined && spot?.Owner?.id === sessionUser?.id && spot?.numReviews < 0) ? (
-                        <div>
-                            <h2>
-                                <i className="fa-solid fa-star"></i>
-                                NEW
-                            </h2>
-                        </div>
-                    ) : (sessionUser === undefined && spot?.numReviews > 1) ? (
-                        <div>
-                            <h2 className="review-header2">
-                                <i className="fa-solid fa-star"></i>
-                                {spot?.avgRating} {spot?.numReviews} reviews
-                            </h2>
-                            <div className="reviewList">
-                                <ReviewList />
+                        ) : (sessionUser === undefined && spot?.numReviews === 1) ? (
+                            <div>
+                                <h2 className="review-header2">
+                                    <i className="fa-solid fa-star"></i>
+                                    {spot?.avgRating} {spot?.numReviews} review
+                                </h2>
+                                <div className="reviewList">
+                                    <ReviewList />
+                                </div>
                             </div>
-                        </div>
-                    ) : (sessionUser === undefined && spot?.numReviews === 1) ? (
-                        <div>
-                            <h2 className="review-header2">
-                                <i className="fa-solid fa-star"></i>
-                                {spot?.avgRating} {spot?.numReviews} review
-                            </h2>
-                            <div className="reviewList">
-                                <ReviewList />
+                        ) : (
+                            <div>
+                                <h2>
+                                    <i className="fa-solid fa-star"></i>
+                                        NEW
+                                </h2>
                             </div>
+                        )}
                         </div>
-                    ) : (
-                        <div>
-                            <h2>
-                                <i className="fa-solid fa-star"></i>
-                                    NEW
-                            </h2>
-                        </div>
-                    )}
                     </div>
                 </div>
             )}
