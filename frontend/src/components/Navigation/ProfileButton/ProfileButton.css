@@ -1,0 +1,80 @@
+.hidden {
+    display: none;
+}
+
+.menu-container {
+    display: flex;
+    align-items: center;
+    background-color: #FFFFFF;
+    border: 1px solid #dddddd;
+    border-radius: 20px;
+    height: 40px;
+    width: 70px;
+}
+
+.menu-container:hover {
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(15,17,17,.15);
+}
+
+.fa-bars {
+    margin: 5px;
+    font-size: 14px;
+}
+
+.profile-pic {
+    height: 30px;
+    margin: 5px;
+}
+
+.showing {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 55px;
+    right: 30px;
+    width: 170px;
+    justify-content: start;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    border: 1px solid #dddddd;
+    box-shadow: 0 2px 5px rgba(15,17,17,.15);
+}
+
+
+.log-out {
+    display: grid;
+    margin-top: 10px;
+    margin-bottom: 8px;
+    width: 90%;
+    background: #FF5A5F;
+    color: #FFFFFF;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.log-out:hover {
+    cursor: pointer;
+}
+
+.user-menu,
+.manage-spots {
+    margin: 1px;
+}
+
+.manage-spots {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    marin-left: 5px;
+    border-top: 1px solid black;
+}
+
+.spots-txt {
+    margin: 0px;
+}
+
+.manage-spots:hover {
+    cursor: pointer;
+}

@@ -1,5 +1,5 @@
 const express = require('express');
-const { Review, User, ReviewImage, Spot, sequelize } = require('../../db/models');
+const { Review, User, ReviewImage, Spot, SpotImage, sequelize } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -21,7 +21,7 @@ router.get('/current', requireAuth, async(req, res) => {
     const user = req.user.id;
 
     const userReview = await Review.findAll({
-        where: { userId:user },
+        where: { userId: user },
         include:[
             {
                 model: User,
@@ -29,11 +29,8 @@ router.get('/current', requireAuth, async(req, res) => {
             },
             {
                 model: Spot,
-                attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price', [sequelize.literal(
-                    `(SELECT url
-                    FROM SpotImages
-                    WHERE spotId = Spot.id AND preview = true)`
-                ), "previewImage"]]
+                attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'],
+                include: {model: SpotImage}
             },
             {
                 model: ReviewImage,
@@ -41,6 +38,18 @@ router.get('/current', requireAuth, async(req, res) => {
             }
         ]
     });
+
+    userReview.forEach(review => {
+        const spotImages = review.dataValues.Spot.SpotImages
+        spotImages.forEach(image => {
+            if (image.dataValues.preview) {
+                review.dataValues.Spot.dataValues.previewImage = image.url
+            } else {
+                review.dataValues.Spot.dataValues.previewImage = null
+            }
+        })
+        delete review.dataValues.Spot.dataValues.SpotImages;
+    })
 
     res.json({Reviews: userReview})
 });
@@ -53,7 +62,6 @@ router.post('/:reviewId/images', requireAuth, async(req, res) => {
     const review = await Review.findByPk(req.params.reviewId);
 
     if (review && user === review.userId) {
-        console.log("here")
         const reviewId = review.id
 
         const newImage = await ReviewImage.create({
@@ -103,6 +111,7 @@ router.delete('/:reviewId', requireAuth, async(req, res) => {
 
     if (review && user === review.userId) {
         await review.destroy();
+        res.json(review)
         res.json({
             "message": "Successfully deleted",
             "statusCode": 200

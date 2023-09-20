@@ -1,0 +1,10 @@
+.item {
+    list-style: none;
+    margin-left: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.item:hover {
+    cursor: pointer;
+}

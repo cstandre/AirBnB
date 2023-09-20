@@ -34,7 +34,8 @@ const validateSpot = [
     .withMessage('Name must be less than 50 characters'),
     check('description')
     .exists()
-    .withMessage('Description is required'),
+    .isLength({ min: 30 })
+    .withMessage('Description must be at least 30 charactors'),
     check('price')
     .exists()
     .withMessage('Price per day is required'),
@@ -45,6 +46,9 @@ const validateReview = [
     check('review')
     .exists()
     .withMessage('Review text is required'),
+    check('review')
+    .isLength({min: 10, max: 255})
+    .withMessage('Review cannot be longer than 255 characters'),
     check('stars')
     .exists()
     .isNumeric({min: 1, max: 5})
@@ -52,7 +56,7 @@ const validateReview = [
     handleValidationErrors
 ];
 
-// Get All Spots     <-- Completed *would like to add something if rating or preview spot is null
+// Get All Spots     <-- Completed
 router.get('/', async (req, res) => {
     let { page, size } = req.query;
 
@@ -82,99 +86,89 @@ router.get('/', async (req, res) => {
       pagination.offset = size * (page - 1)
     }
 
-    const spotsList = await Spot.findAll({
-        attributes: {
-            include: [
-                [sequelize.literal(
-                    `(SELECT AVG(stars)
-                    FROM Reviews
-                    WHERE spotId = Spot.id)`
-                ), "avgRating"],
-                [sequelize.literal(
-                    `(SELECT url
-                    FROM SpotImages
-                    WHERE spotId = Spot.id AND preview = true)`
-                ), "previewImage"]
-            ]
-        },
+    const spotList = await Spot.findAll({
+        include:[
+            {model: SpotImage},
+            {model: Review}
+        ],
         offset: pagination.offset,
         limit: pagination.limit
     });
 
-    // might not be needed
-    // for await(let spot of spotsList) {
-    //     if (!spot.dataValues.previewImage) {
-    //         spot.dataValues.previewImage = 'No Preview Image'
-    //     }
-    // }
+    spotList.forEach(spot => {
+        spot.SpotImages.forEach((image) => {
+            if (image.dataValues.preview) {
+                return spot.dataValues.previewImage = image.url
+            } else {
+                // spot.dataValues.previewImage = null
+            }
+            delete spot.dataValues.SpotImages;
+        })
+        let sum = 0;
+        if (spot.Reviews.length) {
+            spot.Reviews.forEach(review => {
+                sum += review.dataValues.stars
+            })
+            const avg = sum / spot.Reviews.length;
+            spot.dataValues.avgRating = avg.toFixed(1)
+        } else {
+            spot.dataValues.avgRating = null
+        }
+        delete spot.dataValues.Reviews;
+    })
 
-    // for await(let spot of spotsList) {
-    //     if (!spot.dataValues.avgRating) {
-    //         spot.dataValues.avgRating = "Be the first to review!"
-    //     }
-    // }
-
-    spotsList.page = page
-    spotsList.size = size
-    res.json({Spots: spotsList, page, size});
+    spotList.page = page
+    spotList.size = size
+    res.json({Spots: spotList, page, size});
 });
 
-// Get All Spots Owned/Created by the Current User. <-- completed. Would like to add something if rating or preview img is null
+// Get All Spots Owned by the Current User. <-- completed.
 router.get('/current', requireAuth, async (req, res) => {
     const currentUserSpots = await Spot.findAll({
         where: { ownerId: req.user.id },
-        attributes: {
-            include: [
-                [sequelize.literal(
-                    `(SELECT AVG(stars)
-                    FROM Reviews
-                    WHERE spotId = Spot.id)`
-                ), "avgRating"],
-                [sequelize.literal(
-                    `(SELECT url
-                    FROM SpotImages
-                    WHERE spotId = Spot.id AND preview = true)`
-                ), "previewImage"]
-            ]
-        },
+        include: [
+            {model: Review},
+            {model: SpotImage}
+        ]
     });
 
-        // might not be needed
-        for await(let spot of currentUserSpots) {
-            if (!spot.dataValues.previewImage) {
-                spot.dataValues.previewImage = 'No Preview Image'
-            }
-        }
 
-        for await(let spot of currentUserSpots) {
-            if (!spot.dataValues.avgRating) {
-                spot.dataValues.avgRating = "Be the first to review!"
+    currentUserSpots.forEach(spot => {
+        spot.SpotImages.forEach(image => {
+            if (image.dataValues.preview) {
+                spot.dataValues.previewImage = image.url
+            } else {
+                // spot.dataValues.previewImage = null
             }
+            delete spot.dataValues.SpotImages;
+        })
+        let sum = 0;
+        if (spot.Reviews.length) {
+            spot.Reviews.forEach(review => {
+                sum += review.dataValues.stars
+            })
+            const avg = sum / spot.Reviews.length;
+            spot.dataValues.avgRating = avg
+        } else {
+            spot.dataValues.avgRating = null
         }
+        delete spot.dataValues.Reviews;
+    })
 
-    res.json({Spots: currentUserSpots})
+    res.json({Spot: currentUserSpots})
 });
 
-// Get details of a Spot from an Id <-- completed *add something for if a review is null
+// Get details of a Spot from an Id <-- completed
 router.get('/:spotId', async (req, res) => {
     const spotDetails = await Spot.findByPk(req.params.spotId, {
-        attributes: {
-            include: [
-                [sequelize.literal(
-                    `(SELECT COUNT(*)
-                    FROM Reviews)`
-                ), "numReviews"],
-                [sequelize.literal(
-                    `(SELECT AVG(stars)
-                    FROM Reviews
-                    WHERE spotId = Spot.id)`
-                ), "avgRating"],
-            ],
-        },
         include: [
             {
+                model: Review,
+            },
+            {
                 model: SpotImage,
-                attributes: ['id', 'url', 'preview']
+                attributes: ['id', 'url', 'preview'],
+                order: [['id','ASC']]
             },
             {
                 model: User,
@@ -184,15 +178,32 @@ router.get('/:spotId', async (req, res) => {
         ]
     });
 
+    let sum = 0;
+    let count = 0;
 
-    if (spotDetails) {
-        res.json(spotDetails)
-    } else {
+    if (!spotDetails) {
         res.status(404).json({
             "message": "Spot couldn't be found",
             "statusCode": 404
         })
     }
+
+    if (spotDetails.Reviews.length) {
+        spotDetails.Reviews.forEach(review => {
+            sum += review.dataValues.stars
+            count += 1
+        })
+        const avg = sum / spotDetails.Reviews.length;
+        spotDetails.dataValues.avgRating = avg.toFixed(1);
+        spotDetails.dataValues.numReviews = count;
+    } else {
+        spotDetails.dataValues.avgRating = null;
+        spotDetails.dataValues.numReviews = null;
+    }
+    delete spotDetails.dataValues.Reviews;
+
+    res.json(spotDetails)
+
 });
 
 // When I don't put anything into the body, then it sends the expected output for the validation errors. When I input all required data points expect one, I get "title: 'Bad request.'", "errors": ["Invalid Value"]
@@ -239,7 +250,6 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
         const spotImage = await SpotImage.findByPk(newImgId, {
             attributes: ['id', 'url', 'preview']
         })
-
         res.json(spotImage);
     } else {
         res.status(404).json({
@@ -306,10 +316,8 @@ router.get('/:spotId/reviews', async(req, res) => {
         include: [
             { model: User, attributes: ['id', 'firstName', 'lastName'] },
             { model: ReviewImage, attributes: ['id', 'url'] },
-        ]
+        ],
     });
-
-    console.log(spotReview)
 
     if (spotReview.length) {
         res.json({Reviews: spotReview})
@@ -349,7 +357,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) =>
         const makeReview = await Review.create(
             {
                 userId: user,
-                spotId: spotId,
+                spotId: Number(spotId),
                 review: review,
                 stars: stars
             }

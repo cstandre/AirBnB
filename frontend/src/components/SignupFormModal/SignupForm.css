@@ -1,0 +1,22 @@
+.signUp-form {
+    display: grid;
+    align-content: start;
+    padding: 20px;
+}
+
+.signup-header {
+    padding-bottom: 20px;
+    font-size: 400;
+}
+
+.signup-subheader {
+    display: grid;
+    justify-content: start;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.mid-input {
+    padding: 10px;
+    border: 1px solid #b0b0b0
+}

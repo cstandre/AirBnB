@@ -1,0 +1,66 @@
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 30px;
+    padding-left: 20px;
+    height: 60px;
+    margin: 0px;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.logo-container {
+    display: flex;
+    flex: 0 0 auto;
+    color: #FF5A5F;
+    align-items: center;
+    margin: 10px;
+}
+
+.logo-container:hover {
+    cursor: pointer;
+}
+
+.logo-img {
+    height: 30px;
+};
+
+.logo-name {
+    font-weight: 500;
+}
+
+.right-side-container {
+    display: flex;
+    align-items: center;
+    height: 60px;
+}
+
+.user-menu {
+    display: flex;
+    margin-left: 5px;
+    flex: 0 0 auto;
+    z-index: 1000;
+}
+
+.rent-spot-container {
+    display: flex;
+    flex: 0 0 auto;
+    justify-items: start;
+    margin-right: 30px;
+}
+
+.rent-spot-container:hover {
+    cursor: pointer;
+}
+
+.log-out-btn {
+    display: flex;
+    justify-content: center;
+}
+
+.logged-in-user {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 5px;
+}
