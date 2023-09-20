@@ -82,7 +82,7 @@ export default function SpotDetails () {
                                     </span>
                                 </div>
                                 <div className="res-calendar">
-                                    <Reservation /> {/* This will be a calendar */}
+                                    {/* <Reservation /> This will be a calendar */}
                                     <p>guests</p> {/* This will be a drop down */}
                                     <button>Reserve</button>
                                     <p>You wont be charged yet</p>

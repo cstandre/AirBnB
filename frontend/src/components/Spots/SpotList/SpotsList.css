@@ -8,14 +8,21 @@
     justify-items: center;
     align-items: center;
     grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
+    gap: 5px;
     padding-top: 100px;
 }
+
+/* .spot-container {
+    padding: 10px;
+    border: 1px solid #dddddd;
+    box-shadow: 0 2px 5px rgba(15,17,17,.15);
+    border-radius: 5px;
+} */
 
 .preview-img {
     height: 265px;
     width: 265px;
-    border-radius: 10px;
+    border-radius: 15px;
     object-fit: cover;
 }
 
@@ -27,6 +34,9 @@
     display: grid;
     justify-self: center;
     width: 250px;
+    margin-top: 10px;
+    margin-right: 15px;
+    margin-left: 10px;
     grid-template-columns: 2fr 1fr;
     grid-template-rows: 1fr 1fr;
 }
